@@ -1472,7 +1472,7 @@ export default function RoRoMode() {
           }
           .rr-approach-grid { grid-template-columns: 1fr; }
           .rr-about { grid-template-columns: 1fr; gap: 40px; }
-          .rr-about-visual { max-height: 300px; aspect-ratio: auto; }
+          .rr-about-visual { max-height: 400px; aspect-ratio: auto; }
           .rr-portfolio-grid {
             grid-template-columns: 1fr 1fr;
             grid-auto-rows: 180px;
@@ -1769,7 +1769,7 @@ export default function RoRoMode() {
       <section className="rr-about" id="about">
         <FadeIn>
           <div className="rr-about-visual">
-            <img src={`${import.meta.env.BASE_URL}images/aurora-portrait.jpg`} alt="Aurora Leonard - RoRo Mode founder" style={{ objectPosition: "center 30%" }} />
+            <img src={`${import.meta.env.BASE_URL}images/aurora-portrait.jpg`} alt="Aurora Leonard - RoRo Mode founder" style={{ objectPosition: "center 15%" }} />
           </div>
         </FadeIn>
         <FadeIn delay={0.2}>
