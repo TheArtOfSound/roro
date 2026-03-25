@@ -105,12 +105,11 @@ function FadeIn({ children, delay = 0, className = "" }) {
 }
 
 function scrollTo(id) {
-  // Small delay to let React finish the click handler before scrolling
   setTimeout(() => {
     const el = document.getElementById(id);
     if (el) {
       const y = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: "smooth" });
+      document.documentElement.scrollTo({ top: y, behavior: "smooth" });
     }
   }, 10);
 }
