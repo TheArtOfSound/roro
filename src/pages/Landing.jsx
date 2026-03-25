@@ -64,13 +64,19 @@ const TESTIMONIAL_PLACEHOLDERS = [
   },
 ];
 
-function useInView(ref, threshold = 0.15) {
+function useInView(ref, threshold = 0.05) {
   const [inView, setInView] = useState(false);
   useEffect(() => {
     if (!ref.current) return;
+    // Check if already visible on mount
+    const rect = ref.current.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      setInView(true);
+      return;
+    }
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setInView(true); },
-      { threshold }
+      { threshold, rootMargin: "50px" }
     );
     obs.observe(ref.current);
     return () => obs.disconnect();
