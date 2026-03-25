@@ -64,23 +64,24 @@ const TESTIMONIAL_PLACEHOLDERS = [
   },
 ];
 
-function useInView(ref, threshold = 0.05) {
+function useInView(ref) {
   const [inView, setInView] = useState(false);
   useEffect(() => {
     if (!ref.current) return;
-    // Check if already visible on mount
-    const rect = ref.current.getBoundingClientRect();
-    if (rect.top < window.innerHeight && rect.bottom > 0) {
+    const el = ref.current;
+    // Check if already in viewport on mount
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight + 200 && rect.bottom > -200) {
       setInView(true);
       return;
     }
     const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setInView(true); },
-      { threshold, rootMargin: "50px" }
+      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
+      { threshold: 0, rootMargin: "200px 0px" }
     );
-    obs.observe(ref.current);
+    obs.observe(el);
     return () => obs.disconnect();
-  }, [ref, threshold]);
+  }, [ref]);
   return inView;
 }
 
@@ -92,9 +93,10 @@ function FadeIn({ children, delay = 0, className = "" }) {
       ref={ref}
       className={className}
       style={{
+        minHeight: 1,
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(32px)",
-        transition: `opacity 0.8s cubic-bezier(.22,1,.36,1) ${delay}s, transform 0.8s cubic-bezier(.22,1,.36,1) ${delay}s`,
+        transform: visible ? "translateY(0)" : "translateY(24px)",
+        transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}s, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}s`,
       }}
     >
       {children}
