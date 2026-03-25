@@ -1769,7 +1769,7 @@ export default function RoRoMode() {
       <section className="rr-about" id="about">
         <FadeIn>
           <div className="rr-about-visual">
-            <img src={`${import.meta.env.BASE_URL}images/aurora-portrait.jpg`} alt="Aurora Leonard - RoRo Mode founder" style={{ objectPosition: "center 20%" }} />
+            <img src={`${import.meta.env.BASE_URL}images/aurora-portrait.jpg`} alt="Aurora Leonard - RoRo Mode founder" style={{ objectPosition: "center 30%" }} />
           </div>
         </FadeIn>
         <FadeIn delay={0.2}>
