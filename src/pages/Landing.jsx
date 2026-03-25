@@ -238,7 +238,7 @@ export default function RoRoMode() {
           list-style: none;
         }
 
-        .rr-nav-links a {
+        .rr-nav-links a, .rr-nav-links span {
           font-family: var(--font-body);
           font-size: 13px;
           font-weight: 500;
@@ -251,7 +251,7 @@ export default function RoRoMode() {
           cursor: pointer;
         }
 
-        .rr-nav-links a::after {
+        .rr-nav-links a::after, .rr-nav-links span::after {
           content: '';
           position: absolute;
           bottom: -4px;
@@ -262,8 +262,8 @@ export default function RoRoMode() {
           transition: width 0.3s;
         }
 
-        .rr-nav-links a:hover { color: var(--sage); }
-        .rr-nav-links a:hover::after { width: 100%; }
+        .rr-nav-links a:hover, .rr-nav-links span:hover { color: var(--sage); }
+        .rr-nav-links a:hover::after, .rr-nav-links span:hover::after { width: 100%; }
 
         .rr-hamburger {
           display: none;
@@ -1430,7 +1430,7 @@ export default function RoRoMode() {
 
         .rr-mobile-overlay.open { opacity: 1; pointer-events: auto; }
 
-        .rr-mobile-menu a {
+        .rr-mobile-menu a, .rr-mobile-menu span {
           display: block;
           font-family: var(--font-display);
           font-size: 24px;
@@ -1438,6 +1438,7 @@ export default function RoRoMode() {
           text-decoration: none;
           padding: 16px 0;
           border-bottom: 1px solid rgba(245,240,232,0.08);
+          cursor: pointer;
         }
 
         .rr-mobile-close {
@@ -1498,10 +1499,10 @@ export default function RoRoMode() {
           Ro<span>Ro</span> Mode
         </div>
         <ul className="rr-nav-links">
-          <li><a role="button" onClick={() => scrollTo("services")}>Services</a></li>
-          <li><a role="button" onClick={() => scrollTo("portfolio")}>Portfolio</a></li>
-          <li><a role="button" onClick={() => scrollTo("about")}>About</a></li>
-          <li><a role="button" onClick={() => scrollTo("contact")}>Book a Reset</a></li>
+          <li><span role="button" tabIndex={0} onClick={() => scrollTo("services")}>Services</span></li>
+          <li><span role="button" tabIndex={0} onClick={() => scrollTo("portfolio")}>Portfolio</span></li>
+          <li><span role="button" tabIndex={0} onClick={() => scrollTo("about")}>About</span></li>
+          <li><span role="button" tabIndex={0} onClick={() => scrollTo("contact")}>Book a Reset</span></li>
         </ul>
         <button className="rr-hamburger" onClick={() => setMenuOpen(true)}>
           <span /><span /><span />
@@ -1512,10 +1513,10 @@ export default function RoRoMode() {
       <div className={`rr-mobile-overlay ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(false)} />
       <div className={`rr-mobile-menu ${menuOpen ? "open" : ""}`}>
         <button className="rr-mobile-close" onClick={() => setMenuOpen(false)}>×</button>
-        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("services"); }}>Services</a>
-        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("portfolio"); }}>Portfolio</a>
-        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("about"); }}>About</a>
-        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("contact"); }}>Book a Reset</a>
+        <span role="button" tabIndex={0} onClick={() => { setMenuOpen(false); scrollTo("services"); }}>Services</span>
+        <span role="button" tabIndex={0} onClick={() => { setMenuOpen(false); scrollTo("portfolio"); }}>Portfolio</span>
+        <span role="button" tabIndex={0} onClick={() => { setMenuOpen(false); scrollTo("about"); }}>About</span>
+        <span role="button" tabIndex={0} onClick={() => { setMenuOpen(false); scrollTo("contact"); }}>Book a Reset</span>
       </div>
 
       {/* HERO */}
@@ -1540,12 +1541,12 @@ export default function RoRoMode() {
           </FadeIn>
           <FadeIn delay={0.45}>
             <div className="rr-hero-ctas">
-              <a role="button" className="rr-btn-primary" onClick={() => scrollTo("contact")}>
+              <span role="button" tabIndex={0} className="rr-btn-primary" onClick={() => scrollTo("contact")}>
                 Book a Consultation →
-              </a>
-              <a role="button" className="rr-btn-secondary" onClick={() => scrollTo("services")}>
+              </span>
+              <span role="button" tabIndex={0} className="rr-btn-secondary" onClick={() => scrollTo("services")}>
                 See Services
-              </a>
+              </span>
             </div>
           </FadeIn>
         </div>
@@ -1622,9 +1623,9 @@ export default function RoRoMode() {
                   ))}
                 </div>
               )}
-              <a role="button" className="rr-service-cta" onClick={() => scrollTo("contact")}>
+              <span role="button" tabIndex={0} className="rr-service-cta" onClick={() => scrollTo("contact")}>
                 Book this service →
-              </a>
+              </span>
             </div>
           </div>
         </FadeIn>
@@ -1904,7 +1905,7 @@ export default function RoRoMode() {
           <ul className="rr-footer-links">
             <li><a href="https://www.instagram.com/_roro_mode_" target="_blank" rel="noopener">Instagram</a></li>
             <li><a href="https://www.instagram.com/itsauroraleonard/" target="_blank" rel="noopener">Personal</a></li>
-            <li><a role="button" onClick={() => scrollTo("contact")}>Contact</a></li>
+            <li><span role="button" tabIndex={0} onClick={() => scrollTo("contact")}>Contact</span></li>
           </ul>
           <div className="rr-footer-copy">
             © 2026 RoRo MODE — Aurora Leonard. All rights reserved. Built with intention.
