@@ -105,13 +105,11 @@ function FadeIn({ children, delay = 0, className = "" }) {
 }
 
 function scrollTo(id) {
-  setTimeout(() => {
-    const el = document.getElementById(id);
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 80;
-      document.documentElement.scrollTo({ top: y, behavior: "smooth" });
-    }
-  }, 10);
+  const el = document.getElementById(id);
+  if (el) {
+    const y = el.getBoundingClientRect().top + window.scrollY - 80;
+    document.documentElement.scrollTo({ top: y, behavior: "instant" });
+  }
 }
 
 export default function RoRoMode() {
@@ -192,7 +190,7 @@ export default function RoRoMode() {
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: auto; }
 
         body {
           font-family: var(--font-body);
