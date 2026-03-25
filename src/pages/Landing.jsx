@@ -250,6 +250,7 @@ export default function RoRoMode() {
           text-decoration: none;
           position: relative;
           transition: color 0.3s;
+          cursor: pointer;
         }
 
         .rr-nav-links a::after {
@@ -1499,10 +1500,10 @@ export default function RoRoMode() {
           Ro<span>Ro</span> Mode
         </div>
         <ul className="rr-nav-links">
-          <li><a href="#" onClick={(e) => { e.preventDefault(); scrollTo("services"); }}>Services</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); scrollTo("portfolio"); }}>Portfolio</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); scrollTo("about"); }}>About</a></li>
-          <li><a href="#" onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}>Book a Reset</a></li>
+          <li><a role="button" onClick={() => scrollTo("services")}>Services</a></li>
+          <li><a role="button" onClick={() => scrollTo("portfolio")}>Portfolio</a></li>
+          <li><a role="button" onClick={() => scrollTo("about")}>About</a></li>
+          <li><a role="button" onClick={() => scrollTo("contact")}>Book a Reset</a></li>
         </ul>
         <button className="rr-hamburger" onClick={() => setMenuOpen(true)}>
           <span /><span /><span />
@@ -1513,10 +1514,10 @@ export default function RoRoMode() {
       <div className={`rr-mobile-overlay ${menuOpen ? "open" : ""}`} onClick={() => setMenuOpen(false)} />
       <div className={`rr-mobile-menu ${menuOpen ? "open" : ""}`}>
         <button className="rr-mobile-close" onClick={() => setMenuOpen(false)}>×</button>
-        <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false); scrollTo("services"); }}>Services</a>
-        <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false); scrollTo("portfolio"); }}>Portfolio</a>
-        <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false); scrollTo("about"); }}>About</a>
-        <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false); scrollTo("contact"); }}>Book a Reset</a>
+        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("services"); }}>Services</a>
+        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("portfolio"); }}>Portfolio</a>
+        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("about"); }}>About</a>
+        <a role="button" onClick={() => { setMenuOpen(false); scrollTo("contact"); }}>Book a Reset</a>
       </div>
 
       {/* HERO */}
@@ -1541,10 +1542,10 @@ export default function RoRoMode() {
           </FadeIn>
           <FadeIn delay={0.45}>
             <div className="rr-hero-ctas">
-              <a href="#" className="rr-btn-primary" onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}>
+              <a role="button" className="rr-btn-primary" onClick={() => scrollTo("contact")}>
                 Book a Consultation →
               </a>
-              <a href="#" className="rr-btn-secondary" onClick={(e) => { e.preventDefault(); scrollTo("services"); }}>
+              <a role="button" className="rr-btn-secondary" onClick={() => scrollTo("services")}>
                 See Services
               </a>
             </div>
@@ -1623,7 +1624,7 @@ export default function RoRoMode() {
                   ))}
                 </div>
               )}
-              <a href="#" className="rr-service-cta" onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}>
+              <a role="button" className="rr-service-cta" onClick={() => scrollTo("contact")}>
                 Book this service →
               </a>
             </div>
@@ -1905,7 +1906,7 @@ export default function RoRoMode() {
           <ul className="rr-footer-links">
             <li><a href="https://www.instagram.com/_roro_mode_" target="_blank" rel="noopener">Instagram</a></li>
             <li><a href="https://www.instagram.com/itsauroraleonard/" target="_blank" rel="noopener">Personal</a></li>
-            <li><a href="#" onClick={(e) => { e.preventDefault(); scrollTo("contact"); }}>Contact</a></li>
+            <li><a role="button" onClick={() => scrollTo("contact")}>Contact</a></li>
           </ul>
           <div className="rr-footer-copy">
             © 2026 RoRo MODE — Aurora Leonard. All rights reserved. Built with intention.
