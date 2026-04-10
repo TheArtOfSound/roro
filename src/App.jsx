@@ -19,6 +19,7 @@ import Referrals from "./pages/admin/Referrals";
 import GiftCardsAdmin from "./pages/admin/GiftCards";
 import Settings from "./pages/admin/Settings";
 import AITasks from "./pages/admin/AITasks";
+import InvoiceView from "./pages/InvoiceView";
 import GiftCardPurchase from "./pages/GiftCardPurchase";
 import VirtualConsultation from "./pages/VirtualConsultation";
 import ClientDashboard from "./pages/client/ClientDashboard";
@@ -31,6 +32,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/invoice/:id" element={<InvoiceView />} />
       <Route path="/gift-cards" element={<GiftCardPurchase />} />
       <Route path="/virtual" element={<VirtualConsultation />} />
       <Route path="/client/login" element={<ClientLogin />} />

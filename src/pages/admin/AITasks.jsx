@@ -27,6 +27,7 @@ export default function AITasks() {
 
   // AI Receptionist quick import state
   const [services, setServices] = useState([]);
+  const [recentAI, setRecentAI] = useState([]);
   const [showImport, setShowImport] = useState(false);
   const [importSaving, setImportSaving] = useState(false);
   const [importForm, setImportForm] = useState({
@@ -41,11 +42,22 @@ export default function AITasks() {
   useEffect(() => {
     loadTasks();
     loadServices();
+    loadRecentAI();
   }, []);
 
   async function loadServices() {
     const { data } = await supabase.from("services").select("id, title").eq("active", true).order("sort_order");
     setServices(data || []);
+  }
+
+  async function loadRecentAI() {
+    const { data } = await supabase
+      .from("bookings")
+      .select("*, clients(name, email, phone)")
+      .ilike("notes", "%AI Receptionist%")
+      .order("created_at", { ascending: false })
+      .limit(10);
+    setRecentAI(data || []);
   }
 
   async function handleImportBooking(e) {
@@ -285,8 +297,9 @@ export default function AITasks() {
               href="https://ionos.ai-voice-receptionist.com/customer/C_IO_O9Z8NGHE/sessions"
               target="_blank"
               rel="noopener noreferrer"
+              style={{ fontSize: "11px", padding: "6px 12px" }}
             >
-              View Call Logs
+              IONOS Logs
             </a>
             <button
               className={showImport ? "at-btn-secondary" : "at-btn"}
@@ -298,9 +311,47 @@ export default function AITasks() {
           </div>
         </div>
 
-        {!showImport && (
+        {!showImport && recentAI.length === 0 && (
           <div style={{ fontSize: "14px", color: "#6b6560", lineHeight: 1.6 }}>
             Import bookings from AI receptionist calls. Review the call logs, then use Quick Import to create a booking for any client who called in.
+          </div>
+        )}
+
+        {!showImport && recentAI.length > 0 && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 4 }}>
+            {recentAI.map((b) => (
+              <div key={b.id} className="at-card" style={{ margin: 0 }}>
+                <div className="at-card-header">
+                  <div>
+                    {b.clients && (
+                      <Link to={`/admin/clients/${b.clients.id || ""}`} className="at-card-client">
+                        {b.clients.name}
+                      </Link>
+                    )}
+                    <div className="at-card-title" style={{ fontSize: 14 }}>{b.service || "Service requested"}</div>
+                  </div>
+                  <span className="at-type-badge" style={{
+                    background: b.status === "pending" ? "#fef3c7" : b.status === "completed" ? "#d1fae5" : "#f5f0e8",
+                    color: b.status === "pending" ? "#92400e" : b.status === "completed" ? "#065f46" : "#6b6560",
+                  }}>
+                    {b.status || "pending"}
+                  </span>
+                </div>
+                <div style={{ display: "flex", gap: 16, flexWrap: "wrap", fontSize: 13, color: "#6b6560" }}>
+                  {b.clients?.email && <span>{b.clients.email}</span>}
+                  {b.clients?.phone && <span>{b.clients.phone}</span>}
+                  <span>{new Date(b.created_at).toLocaleDateString()}</span>
+                </div>
+                <div style={{ marginTop: 8 }}>
+                  <Link
+                    to={`/admin/bookings/${b.id}`}
+                    style={{ fontSize: 13, color: "#7a8c6e", textDecoration: "none", fontWeight: 500 }}
+                  >
+                    View Booking &rarr;
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 

@@ -29,6 +29,11 @@ export default function InvoiceDetail() {
     setToast({ message: "Payment link copied!", type: "success" });
   }
 
+  function copyClientLink() {
+    navigator.clipboard.writeText(`https://roromode.com/invoice/${id}`);
+    setToast({ message: "Client invoice link copied!", type: "success" });
+  }
+
   if (!invoice) return <div style={{ padding: 40, textAlign: "center", color: "#6b6560" }}>Loading...</div>;
 
   const lineItems = Array.isArray(invoice.line_items) ? invoice.line_items : [];
@@ -138,6 +143,7 @@ export default function InvoiceDetail() {
         )}
 
         <div className="invd-actions">
+          <button className="invd-btn" onClick={copyClientLink}>Copy Client Link</button>
           {invoice.status === "draft" && <button className="invd-btn primary" onClick={() => updateStatus("sent")}>Mark as Sent</button>}
           {["sent", "overdue"].includes(invoice.status) && <button className="invd-btn paid" onClick={() => updateStatus("paid")}>Mark as Paid</button>}
           {invoice.status === "sent" && <button className="invd-btn" onClick={() => updateStatus("overdue")}>Mark Overdue</button>}
