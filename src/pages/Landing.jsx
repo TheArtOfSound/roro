@@ -1618,55 +1618,60 @@ export default function RoRoMode() {
       <section className="rr-services" id="services">
         <FadeIn>
           <div className="rr-section-label">Services</div>
-          <h2 className="rr-section-heading">
-            What we transform
-          </h2>
+          <h2 className="rr-section-heading">What we transform</h2>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <div className="rr-services-grid">
-            <div className="rr-services-tabs">
-              {SERVICES.map((s, i) => (
-                <button
-                  key={i}
-                  className={`rr-service-tab ${activeService === i ? "active" : ""}`}
-                  onClick={() => setActiveService(i)}
-                >
-                  <span className="rr-tab-icon">{s.icon}</span>
-                  {s.title}
-                </button>
-              ))}
-            </div>
-            <div className="rr-service-detail" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 32, alignItems: "start" }}>
-              <div>
-                <h3>{SERVICES[activeService].title}</h3>
-                <p>{SERVICES[activeService].desc}</p>
-                {SERVICES[activeService].price && (
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 22, color: "var(--sage)", fontWeight: 500, margin: "16px 0" }}>{SERVICES[activeService].price}</div>
-                )}
-                {SERVICES[activeService].keywords && (
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
-                    {SERVICES[activeService].keywords.map((kw, i) => (
-                      <span key={i} style={{
-                        fontSize: "10px", fontWeight: 500, letterSpacing: "1.5px",
-                        textTransform: "uppercase", padding: "6px 14px",
-                        border: "1px solid var(--sand)", borderRadius: "100px",
-                        color: "var(--text-light)",
-                      }}>{kw}</span>
-                    ))}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, maxWidth: 1200, margin: "0 auto" }}>
+            {SERVICES.map((svc, i) => (
+              <div
+                key={i}
+                onClick={() => setActiveService(activeService === i ? -1 : i)}
+                style={{
+                  cursor: "pointer",
+                  border: "2px solid",
+                  borderColor: activeService === i ? "var(--sage)" : "#e8e0d4",
+                  background: activeService === i ? "var(--warm-white)" : "white",
+                  transition: "all 0.3s",
+                  overflow: "hidden",
+                }}
+              >
+                {/* Card image */}
+                <div style={{ position: "relative", background: "#f5f0e8" }}>
+                  <img
+                    src={`${import.meta.env.BASE_URL}images/${svc.image}`}
+                    alt={svc.title}
+                    style={{ width: "100%", height: 280, objectFit: "contain", display: "block" }}
+                  />
+                </div>
+                {/* Card content */}
+                <div style={{ padding: "20px 24px" }}>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 400, color: "var(--charcoal)", marginBottom: 4 }}>
+                    {svc.title}
                   </div>
-                )}
-                <span role="button" tabIndex={0} className="rr-service-cta" onClick={() => scrollTo("contact")}>
-                  Book this service →
-                </span>
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--sage)", fontWeight: 500, marginBottom: 8 }}>
+                    {svc.price}
+                  </div>
+                  {activeService === i && (
+                    <div style={{ marginTop: 12 }}>
+                      <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--text-light)", marginBottom: 16 }}>{svc.desc}</p>
+                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
+                        {svc.keywords.map((kw, j) => (
+                          <span key={j} style={{
+                            fontSize: 10, fontWeight: 500, letterSpacing: 1.5,
+                            textTransform: "uppercase", padding: "5px 12px",
+                            border: "1px solid var(--sand)", borderRadius: 100,
+                            color: "var(--text-light)",
+                          }}>{kw}</span>
+                        ))}
+                      </div>
+                      <span role="button" tabIndex={0} className="rr-service-cta" onClick={(e) => { e.stopPropagation(); scrollTo("contact"); }}>
+                        Book this service →
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
-              {SERVICES[activeService].image && (
-                <img
-                  src={`${import.meta.env.BASE_URL}images/${SERVICES[activeService].image}`}
-                  alt={SERVICES[activeService].title}
-                  style={{ width: 220, height: 220, objectFit: "contain", borderRadius: 4, flexShrink: 0 }}
-                />
-              )}
-            </div>
+            ))}
           </div>
         </FadeIn>
       </section>
