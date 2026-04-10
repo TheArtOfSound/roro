@@ -34,6 +34,38 @@ export default function InvoiceDetail() {
     setToast({ message: "Client invoice link copied!", type: "success" });
   }
 
+  function emailInvoice() {
+    const clientName = invoice.clients?.name?.split(" ")[0] || "there";
+    const clientEmail = invoice.clients?.email || "";
+    const total = ((invoice.amount_cents || 0) / 100).toFixed(2);
+    const invoiceNum = invoice.invoice_number || "";
+    const dueDate = invoice.due_date ? new Date(invoice.due_date).toLocaleDateString() : "";
+    const link = `https://roromode.com/invoice/${id}`;
+
+    const subject = encodeURIComponent(`Invoice ${invoiceNum} from RoRo Mode — $${total}`);
+    const body = encodeURIComponent(
+`Hi ${clientName},
+
+Thank you for choosing RoRo Mode! Here's your invoice for the recent service.
+
+Invoice: ${invoiceNum}
+Amount: $${total}${dueDate ? `\nDue: ${dueDate}` : ""}
+
+You can view your invoice and pay securely here:
+${link}
+
+Payment options available: Venmo, Zelle, Cash App, or cash.
+
+If you have any questions, feel free to reply to this email or call/text me at (662) 479-4007.
+
+Thank you!
+Aurora Leonard
+RoRo Mode — Home Styling & Professional Organizing
+roromode.com`
+    );
+    window.open(`mailto:${clientEmail}?subject=${subject}&body=${body}`, "_self");
+  }
+
   if (!invoice) return <div style={{ padding: 40, textAlign: "center", color: "#6b6560" }}>Loading...</div>;
 
   const lineItems = Array.isArray(invoice.line_items) ? invoice.line_items : [];
@@ -144,6 +176,7 @@ export default function InvoiceDetail() {
 
         <div className="invd-actions">
           <button className="invd-btn" onClick={copyClientLink}>Copy Client Link</button>
+          <button className="invd-btn primary" onClick={emailInvoice}>✉ Email to Client</button>
           {invoice.status === "draft" && <button className="invd-btn primary" onClick={() => updateStatus("sent")}>Mark as Sent</button>}
           {["sent", "overdue"].includes(invoice.status) && <button className="invd-btn paid" onClick={() => updateStatus("paid")}>Mark as Paid</button>}
           {invoice.status === "sent" && <button className="invd-btn" onClick={() => updateStatus("overdue")}>Mark Overdue</button>}
