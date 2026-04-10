@@ -11,6 +11,7 @@ export default function BookingDetail() {
   const navigate = useNavigate();
   const [booking, setBooking] = useState(null);
   const [toast, setToast] = useState(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => { load(); }, [id]);
 
@@ -20,9 +21,14 @@ export default function BookingDetail() {
   }
 
   async function updateField(field, value) {
-    await supabase.from("bookings").update({ [field]: value }).eq("id", id);
-    setBooking((b) => ({ ...b, [field]: value }));
-    setToast({ message: "Updated!", type: "success" });
+    setSaving(true);
+    try {
+      await supabase.from("bookings").update({ [field]: value }).eq("id", id);
+      setBooking((b) => ({ ...b, [field]: value }));
+      setToast({ message: "Updated!", type: "success" });
+    } finally {
+      setSaving(false);
+    }
   }
 
   if (!booking) return <div style={{ padding: 40, textAlign: "center", color: "#6b6560" }}>Loading...</div>;
@@ -54,7 +60,7 @@ export default function BookingDetail() {
         <div style={{ background: "white", border: "1px solid #e8e0d4", padding: 28 }}>
           <div style={{ marginBottom: 20 }}>
             <label style={labelStyle}>Status</label>
-            <select style={fieldStyle} value={booking.status} onChange={(e) => updateField("status", e.target.value)}>
+            <select style={{ ...fieldStyle, opacity: saving ? 0.7 : 1 }} disabled={saving} value={booking.status} onChange={(e) => updateField("status", e.target.value)}>
               {STATUS_OPTIONS.map((s) => <option key={s} value={s}>{s.replace("_", " ")}</option>)}
             </select>
           </div>

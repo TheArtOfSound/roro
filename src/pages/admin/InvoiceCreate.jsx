@@ -8,6 +8,7 @@ export default function InvoiceCreate() {
   const [searchParams] = useSearchParams();
   const [clients, setClients] = useState([]);
   const [toast, setToast] = useState(null);
+  const [saving, setSaving] = useState(false);
   const [form, setForm] = useState({
     client_id: searchParams.get("client") || "",
     booking_id: searchParams.get("booking") || "",
@@ -39,29 +40,33 @@ export default function InvoiceCreate() {
 
   async function handleSubmit(e, status = "draft") {
     e.preventDefault();
+    setSaving(true);
+    try {
+      // Generate invoice number
+      const { count } = await supabase.from("invoices").select("*", { count: "exact", head: true });
+      const num = `RORO-2026-${String((count || 0) + 1).padStart(3, "0")}`;
 
-    // Generate invoice number
-    const { count } = await supabase.from("invoices").select("*", { count: "exact", head: true });
-    const num = `RORO-2026-${String((count || 0) + 1).padStart(3, "0")}`;
+      const lineItemsForDb = form.line_items.map((l) => ({
+        desc: l.desc, qty: parseFloat(l.qty) || 0, unit_price_cents: Math.round((parseFloat(l.unit_price) || 0) * 100),
+      }));
 
-    const lineItemsForDb = form.line_items.map((l) => ({
-      desc: l.desc, qty: parseFloat(l.qty) || 0, unit_price_cents: Math.round((parseFloat(l.unit_price) || 0) * 100),
-    }));
+      const { data, error } = await supabase.from("invoices").insert({
+        invoice_number: num,
+        client_id: form.client_id || null,
+        booking_id: form.booking_id || null,
+        status,
+        amount_cents: Math.round(total * 100),
+        description: form.description,
+        line_items: lineItemsForDb,
+        due_date: form.due_date || null,
+        stripe_payment_url: form.stripe_payment_url || null,
+      }).select().single();
 
-    const { data, error } = await supabase.from("invoices").insert({
-      invoice_number: num,
-      client_id: form.client_id || null,
-      booking_id: form.booking_id || null,
-      status,
-      amount_cents: Math.round(total * 100),
-      description: form.description,
-      line_items: lineItemsForDb,
-      due_date: form.due_date || null,
-      stripe_payment_url: form.stripe_payment_url || null,
-    }).select().single();
-
-    if (error) { setToast({ message: error.message, type: "error" }); return; }
-    navigate(`/admin/invoices/${data.id}`);
+      if (error) { setToast({ message: error.message, type: "error" }); return; }
+      navigate(`/admin/invoices/${data.id}`);
+    } finally {
+      setSaving(false);
+    }
   }
 
   const fieldStyle = {
@@ -155,9 +160,9 @@ export default function InvoiceCreate() {
         </div>
 
         <div className="ic-actions">
-          <button type="submit" className="ic-btn ic-btn-primary">Save as Draft</button>
-          <button type="button" className="ic-btn ic-btn-primary" style={{ background: "#7a8c6e" }}
-            onClick={(e) => handleSubmit(e, "sent")}>Save & Send</button>
+          <button type="submit" disabled={saving} className="ic-btn ic-btn-primary" style={{ opacity: saving ? 0.7 : 1 }}>{saving ? "Saving..." : "Save as Draft"}</button>
+          <button type="button" disabled={saving} className="ic-btn ic-btn-primary" style={{ background: "#7a8c6e", opacity: saving ? 0.7 : 1 }}
+            onClick={(e) => handleSubmit(e, "sent")}>{saving ? "Saving..." : "Save & Send"}</button>
           <button type="button" className="ic-btn ic-btn-secondary" onClick={() => navigate("/admin/invoices")}>Cancel</button>
         </div>
       </form>

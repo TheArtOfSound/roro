@@ -21,27 +21,33 @@ const GALLERY = [
 const SERVICES = [
   {
     title: "Home Resets",
-    desc: "A complete refresh of your living spaces — reimagined layouts, curated styling, and intentional design. We declutter, reorganize, and restyle every room so your home feels brand new without buying brand new. Perfect for move-ins, seasonal refreshes, or when you just need a fresh start.",
+    desc: "A complete refresh of your living spaces — reimagined layouts, curated styling, and intentional design that transforms your home into something that feels entirely new... without buying brand new.",
     icon: "⟐",
     keywords: ["Decluttering", "Space Planning", "Room Styling", "Fresh Start"],
   },
   {
     title: "Closet Transformations",
-    desc: "From chaotic to composed. We design custom closet systems that actually work for your lifestyle — organized by season, color, and frequency so your mornings start calm. Includes wardrobe editing, capsule wardrobe consulting, and storage optimization.",
+    desc: "From chaotic to composed — thoughtfully designed systems tailored to your life. Organized by season, color, and frequency so your mornings begin with ease and intention.",
     icon: "◧",
     keywords: ["Wardrobe Edit", "Capsule Closet", "Color Coded", "Storage Solutions"],
   },
   {
     title: "Pantry Organization",
-    desc: "Functional beauty for the heart of your kitchen. We install clear containers, woven baskets, tiered shelving, lazy susans, and label everything. Logical zones for snacks, baking, canned goods, and spices — a system you'll actually maintain.",
+    desc: "Functional beauty at the heart of your kitchen — clear containers, intentional zones, and systems designed to be lived in and maintained with ease.",
     icon: "⊞",
     keywords: ["Container Systems", "Labeled Zones", "Basket Styling", "Functional Design"],
   },
   {
     title: "Sustainable Styling",
-    desc: "Treasure hunting at its finest. We source thrifted, vintage, and secondhand pieces that give your space character no catalog can replicate. Estate sales, flea markets, consignment — we find the gold so you don't have to.",
+    desc: "Treasure hunting at its finest — sourcing thrifted, vintage, and secondhand pieces that bring depth, character, and individuality no catalog can replicate.",
     icon: "◎",
     keywords: ["Thrift Sourcing", "Vintage Finds", "Eco-Friendly", "One-of-a-Kind"],
+  },
+  {
+    title: "Virtual Consultation",
+    desc: "Step into a personalized design experience from anywhere. We walk through your goals, challenges, and vision while evaluating your space in real time — expert guidance on organization, styling, and functional flow, tailored specifically to your lifestyle.",
+    icon: "◉",
+    keywords: ["Remote Design", "Video Session", "Personalized Plan", "Anywhere"],
   },
 ];
 
@@ -1854,6 +1860,7 @@ export default function RoRoMode() {
                     <option>Closet Transformation — Wardrobe Edit & Organization</option>
                     <option>Pantry Organization — Containers, Labels & Zones</option>
                     <option>Sustainable Styling — Thrifted & Vintage Sourcing</option>
+                    <option>Virtual Consultation — Remote Design Session</option>
                     <option>Garage / Storage Organization</option>
                     <option>Move-In / Move-Out Setup</option>
                     <option>Holiday / Seasonal Refresh</option>

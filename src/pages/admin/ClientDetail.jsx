@@ -12,6 +12,7 @@ export default function ClientDetail() {
   const [editing, setEditing] = useState(false);
   const [form, setForm] = useState({});
   const [toast, setToast] = useState(null);
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => { load(); }, [id]);
 
@@ -26,13 +27,18 @@ export default function ClientDetail() {
 
   async function saveClient(e) {
     e.preventDefault();
-    const { error } = await supabase.from("clients").update({
-      name: form.name, email: form.email, phone: form.phone, address: form.address, notes: form.notes,
-    }).eq("id", id);
-    if (error) { setToast({ message: error.message, type: "error" }); return; }
-    setClient(form);
-    setEditing(false);
-    setToast({ message: "Client updated!", type: "success" });
+    setSaving(true);
+    try {
+      const { error } = await supabase.from("clients").update({
+        name: form.name, email: form.email, phone: form.phone, address: form.address, notes: form.notes,
+      }).eq("id", id);
+      if (error) { setToast({ message: error.message, type: "error" }); return; }
+      setClient(form);
+      setEditing(false);
+      setToast({ message: "Client updated!", type: "success" });
+    } finally {
+      setSaving(false);
+    }
   }
 
   if (!client) return <div style={{ padding: 40, textAlign: "center", color: "#6b6560" }}>Loading...</div>;
@@ -86,10 +92,11 @@ export default function ClientDetail() {
             <textarea style={{ ...inputStyle, minHeight: 100, resize: "vertical" }} value={form.notes || ""} disabled={!editing} onChange={(e) => setForm({ ...form, notes: e.target.value })} />
           </div>
           {editing && (
-            <button type="submit" style={{
+            <button type="submit" disabled={saving} style={{
               padding: "12px 24px", background: "#1a1a1a", color: "#f5f0e8", border: "none",
               fontFamily: "'DM Sans', sans-serif", fontSize: 12, letterSpacing: 1, textTransform: "uppercase", cursor: "pointer",
-            }}>Save Changes</button>
+              opacity: saving ? 0.7 : 1,
+            }}>{saving ? "Saving..." : "Save Changes"}</button>
           )}
         </form>
 
