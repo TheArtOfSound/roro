@@ -738,7 +738,7 @@ export default function RoRoMode() {
           padding: 48px 40px;
           max-width: 1100px;
           margin: 0 auto;
-          text-align: center;
+          text-align: left;
         }
 
         .rr-testimonials-grid {
