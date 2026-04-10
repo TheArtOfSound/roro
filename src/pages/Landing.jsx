@@ -182,6 +182,8 @@ export default function RoRoMode() {
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html, body { overflow-x: hidden; max-width: 100vw; }
+
         html { scroll-behavior: smooth; }
 
         body {
@@ -1492,6 +1494,81 @@ export default function RoRoMode() {
           .rr-nav { padding: 16px 24px; }
           .rr-nav.scrolled { padding: 12px 24px; }
         }
+
+        @media (max-width: 768px) {
+          /* Hero */
+          .rr-hero { min-height: auto; padding: 60px 20px 40px; }
+          .rr-hero h1 { font-size: 32px; }
+
+          /* Nav */
+          .rr-nav { padding: 12px 16px; }
+          .rr-nav.scrolled { padding: 10px 16px; }
+          .rr-nav-links { display: none; }
+          .rr-hamburger { display: flex; }
+
+          /* Social proof */
+          .rr-social-proof-strip { flex-wrap: wrap !important; gap: 8px !important; justify-content: center !important; }
+
+          /* Philosophy */
+          .rr-philosophy { padding: 40px 20px; }
+          .rr-philosophy-inner { grid-template-columns: 1fr; gap: 24px; }
+
+          /* Services - override inline grid */
+          .rr-services { padding: 40px 16px; }
+          .rr-services-card-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+
+          /* Approach */
+          .rr-approach { padding: 40px 20px; }
+          .rr-approach-grid { grid-template-columns: 1fr; }
+
+          /* Testimonials */
+          .rr-testimonials { padding: 40px 20px; }
+          .rr-testimonials-grid { grid-template-columns: 1fr; }
+
+          /* Small biz */
+          .rr-smallbiz { padding: 32px 20px; }
+
+          /* Hero strip */
+          .rr-hero-strip-overlay { padding: 20px; }
+
+          /* Badges */
+          .rr-badges { padding: 16px 20px; }
+          .rr-badges-inner { gap: 12px; }
+
+          /* Portfolio */
+          .rr-portfolio { padding: 40px 20px; }
+          .rr-portfolio-grid { grid-template-columns: 1fr 1fr; grid-auto-rows: 120px; }
+          .rr-portfolio-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+          .rr-portfolio-item:nth-child(2) { grid-column: span 1; grid-row: span 1; }
+          .rr-portfolio-item:nth-child(3) { grid-column: span 1; grid-row: span 1; }
+          .rr-portfolio-item:nth-child(4) { grid-column: span 1; grid-row: span 1; }
+          .rr-portfolio-item:nth-child(5) { grid-column: span 1; grid-row: span 1; }
+          .rr-portfolio-item:nth-child(6) { grid-column: span 2; grid-row: span 1; }
+          .rr-portfolio-item:nth-child(7) { grid-column: span 2; grid-row: span 1; }
+
+          /* About */
+          .rr-about { grid-template-columns: 1fr; padding: 40px 20px; gap: 24px; }
+          .rr-about-visual { max-height: 300px; }
+
+          /* CTA banner */
+          .rr-cta-banner { padding: 32px 20px !important; }
+
+          /* Contact */
+          .rr-contact { padding: 40px 20px; }
+          .rr-form { grid-template-columns: 1fr; }
+          .rr-form-row { grid-template-columns: 1fr !important; }
+
+          /* Instagram */
+          .rr-instagram { padding: 32px 20px; }
+
+          /* Footer */
+          .rr-footer { padding: 32px 20px 20px; }
+          .rr-footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+          .rr-footer-links { justify-content: center; }
+
+          /* Mobile menu width */
+          .rr-mobile-menu { width: 280px; padding: 60px 24px; }
+        }
       `}</style>
 
       {/* NAV */}
@@ -1559,14 +1636,14 @@ export default function RoRoMode() {
 
       {/* SOCIAL PROOF */}
       <section style={{ padding: "12px 20px", background: "var(--warm-white)", textAlign: "center" }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "center", gap: 24, alignItems: "center", flexWrap: "nowrap" }}>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-light)", whiteSpace: "nowrap" }}>Trusted by homeowners across the Greater Phoenix area</div>
+        <div className="rr-social-proof-strip" style={{ maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "center", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-light)" }}>Trusted by homeowners across the Greater Phoenix area</div>
           <span style={{ color: "var(--sand)" }}>|</span>
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1, whiteSpace: "nowrap" }}>50+ Spaces Transformed</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1 }}>50+ Spaces Transformed</span>
           <span style={{ color: "var(--sand)" }}>|</span>
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1, whiteSpace: "nowrap" }}>5-Star Reviews</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1 }}>5-Star Reviews</span>
           <span style={{ color: "var(--sand)" }}>|</span>
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1, whiteSpace: "nowrap" }}>Same-Week Availability</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1 }}>Same-Week Availability</span>
         </div>
       </section>
 
@@ -1607,7 +1684,7 @@ export default function RoRoMode() {
           <h2 className="rr-section-heading">What we transform</h2>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, maxWidth: 1200, margin: "0 auto" }}>
+          <div className="rr-services-card-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, maxWidth: 1200, margin: "0 auto" }}>
             {SERVICES.map((svc, i) => (
               <div
                 key={i}
@@ -1844,7 +1921,7 @@ export default function RoRoMode() {
       </section>
 
       {/* FREE CONSULTATION CTA */}
-      <section style={{
+      <section className="rr-cta-banner" style={{
         padding: "36px 40px",
         background: "linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%)",
         textAlign: "center"
@@ -1950,7 +2027,7 @@ export default function RoRoMode() {
                     ))}
                   </div>
                 </div>
-                <div className="rr-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, gridColumn: "1 / -1" }}>
+                <div className="rr-form-row rr-form-full" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
                   <div>
                     <label>Budget Range</label>
                     <select value={formData.budget || ""} onChange={(e) => setFormData({ ...formData, budget: e.target.value })}>
