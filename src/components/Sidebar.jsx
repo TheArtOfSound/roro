@@ -6,6 +6,8 @@ const NAV_ITEMS = [
   { to: "/admin/clients", label: "Clients", icon: "◉" },
   { to: "/admin/invoices", label: "Invoices", icon: "▤" },
   { to: "/admin/messages", label: "Messages", icon: "◧" },
+  { to: "/admin/referrals", label: "Referrals", icon: "⟐" },
+  { to: "/admin/gift-cards", label: "Gift Cards", icon: "▣" },
 ];
 
 export default function Sidebar({ open, onClose }) {

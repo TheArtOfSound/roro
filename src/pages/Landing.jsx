@@ -23,30 +23,35 @@ const SERVICES = [
     title: "Home Resets",
     desc: "A complete refresh of your living spaces — reimagined layouts, curated styling, and intentional design that transforms your home into something that feels entirely new... without buying brand new.",
     icon: "⟐",
+    price: "Starting at $375",
     keywords: ["Decluttering", "Space Planning", "Room Styling", "Fresh Start"],
   },
   {
     title: "Closet Transformations",
     desc: "From chaotic to composed — thoughtfully designed systems tailored to your life. Organized by season, color, and frequency so your mornings begin with ease and intention.",
     icon: "◧",
+    price: "Starting at $250",
     keywords: ["Wardrobe Edit", "Capsule Closet", "Color Coded", "Storage Solutions"],
   },
   {
     title: "Pantry Organization",
     desc: "Functional beauty at the heart of your kitchen — clear containers, intentional zones, and systems designed to be lived in and maintained with ease.",
     icon: "⊞",
+    price: "Starting at $200",
     keywords: ["Container Systems", "Labeled Zones", "Basket Styling", "Functional Design"],
   },
   {
     title: "Sustainable Styling",
     desc: "Treasure hunting at its finest — sourcing thrifted, vintage, and secondhand pieces that bring depth, character, and individuality no catalog can replicate.",
     icon: "◎",
+    price: "Starting at $150",
     keywords: ["Thrift Sourcing", "Vintage Finds", "Eco-Friendly", "One-of-a-Kind"],
   },
   {
     title: "Virtual Consultation",
     desc: "Step into a personalized design experience from anywhere. We walk through your goals, challenges, and vision while evaluating your space in real time — expert guidance on organization, styling, and functional flow, tailored specifically to your lifestyle.",
     icon: "◉",
+    price: "$125 / session",
     keywords: ["Remote Design", "Video Session", "Personalized Plan", "Anywhere"],
   },
 ];
@@ -122,7 +127,7 @@ export default function RoRoMode() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const [scrollY, setScrollY] = useState(0);
-  const [formData, setFormData] = useState({ name: "", email: "", service: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", service: "", message: "", spaces: [], budget: "", timeline: "" });
   const [formSent, setFormSent] = useState(false);
   const [lightbox, setLightbox] = useState({ open: false, index: 0 });
 
@@ -167,7 +172,7 @@ export default function RoRoMode() {
       name: formData.name.trim(),
       email: formData.email.trim(),
       service: formData.service,
-      message: formData.message.trim(),
+      message: `Spaces: ${(formData.spaces || []).join(", ")}\nBudget: ${formData.budget || "Not specified"}\nTimeline: ${formData.timeline || "Not specified"}\n\n${formData.message.trim()}`,
     });
     setFormSending(false);
     if (error) {
@@ -1569,6 +1574,22 @@ export default function RoRoMode() {
         </div>
       </section>
 
+      {/* SOCIAL PROOF */}
+      <section style={{ padding: "40px 20px", background: "var(--warm-white)", textAlign: "center" }}>
+        <FadeIn>
+          <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", justifyContent: "center", gap: 48, alignItems: "center", flexWrap: "wrap", opacity: 0.5 }}>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-light)" }}>Trusted by homeowners across Texas</div>
+            <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--text-light)", letterSpacing: 1 }}>50+ Spaces Transformed</span>
+              <span style={{ color: "var(--sand)" }}>|</span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--text-light)", letterSpacing: 1 }}>5-Star Reviews</span>
+              <span style={{ color: "var(--sand)" }}>|</span>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--text-light)", letterSpacing: 1 }}>Same-Week Availability</span>
+            </div>
+          </div>
+        </FadeIn>
+      </section>
+
       {/* PHILOSOPHY */}
       <section className="rr-philosophy">
         <div className="rr-philosophy-inner">
@@ -1624,6 +1645,9 @@ export default function RoRoMode() {
             <div className="rr-service-detail">
               <h3>{SERVICES[activeService].title}</h3>
               <p>{SERVICES[activeService].desc}</p>
+              {SERVICES[activeService].price && (
+                <div style={{ fontFamily: "var(--font-display)", fontSize: 22, color: "var(--sage)", fontWeight: 500, margin: "16px 0" }}>{SERVICES[activeService].price}</div>
+              )}
               {SERVICES[activeService].keywords && (
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
                   {SERVICES[activeService].keywords.map((kw, i) => (
@@ -1648,27 +1672,37 @@ export default function RoRoMode() {
       <section className="rr-approach" id="approach">
         <div className="rr-approach-inner">
           <FadeIn>
-            <div className="rr-section-label">How It Works</div>
+            <div className="rr-section-label">The RoRo Reset Method</div>
             <h2 className="rr-section-heading">
-              From overwhelmed to "I can't believe this is my house"
+              Your space, reimagined in <em>five simple steps</em>
             </h2>
           </FadeIn>
           <div className="rr-approach-grid">
             {[
               {
                 num: "01",
-                title: "Walkthrough & Vision",
-                desc: "We tour your space, understand how you live, and identify what's working and what isn't. No judgment — just honest eyes and a plan."
+                title: "Discovery Call",
+                desc: "A quick, free phone conversation to understand your space, your challenges, and your vision. We'll discuss which service fits and schedule your session."
               },
               {
                 num: "02",
-                title: "Source & Style",
-                desc: "We treasure-hunt for the perfect pieces — thrift stores, estate sales, vintage shops. Every item is chosen with intention and your space in mind."
+                title: "Walkthrough & Vision",
+                desc: "We tour your space together — assessing what's working, what isn't, and mapping out a plan that honors how you actually live."
               },
               {
                 num: "03",
+                title: "Source & Style",
+                desc: "We treasure-hunt for the perfect pieces — thrift stores, estate sales, vintage shops. Every item chosen with intention and your space in mind."
+              },
+              {
+                num: "04",
                 title: "The Reset",
-                desc: "We transform the space. New layouts, curated styling, organized systems. You walk back in and it finally feels like home."
+                desc: "Hands-on transformation day. We declutter, reorganize, restyle, and install systems designed to last — not just look good for a photo."
+              },
+              {
+                num: "05",
+                title: "The Reveal & Maintain",
+                desc: "We walk you through everything, share maintenance tips, and check in 2 weeks later to make sure the systems stick."
               }
             ].map((step, i) => (
               <FadeIn key={i} delay={i * 0.15}>
@@ -1811,6 +1845,31 @@ export default function RoRoMode() {
         </FadeIn>
       </section>
 
+      {/* FREE CONSULTATION CTA */}
+      <section style={{
+        padding: "60px 40px",
+        background: "linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%)",
+        textAlign: "center"
+      }}>
+        <FadeIn>
+          <div style={{ maxWidth: 600, margin: "0 auto" }}>
+            <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px, 3vw, 36px)", color: "white", fontWeight: 400, marginBottom: 12 }}>
+              Not sure where to start?
+            </h2>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "rgba(255,255,255,0.85)", marginBottom: 24, lineHeight: 1.6 }}>
+              Book a free 15-minute discovery call. We'll talk through your space, your goals, and find the right service for you — no pressure, no commitment.
+            </p>
+            <span role="button" tabIndex={0} onClick={() => scrollTo("contact")} style={{
+              display: "inline-block", padding: "14px 36px", background: "white", color: "var(--sage)",
+              fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 600, letterSpacing: 1.5,
+              textTransform: "uppercase", cursor: "pointer", border: "none", transition: "all 0.3s"
+            }}>
+              Book Your Free Call →
+            </span>
+          </div>
+        </FadeIn>
+      </section>
+
       {/* CONTACT */}
       <section className="rr-contact" id="contact">
         <div className="rr-contact-inner">
@@ -1866,6 +1925,55 @@ export default function RoRoMode() {
                     <option>Holiday / Seasonal Refresh</option>
                     <option>Not sure yet — help me decide</option>
                   </select>
+                </div>
+                <div className="rr-form-full">
+                  <label>Which spaces need help?</label>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 4 }}>
+                    {["Kitchen / Pantry", "Closets / Wardrobe", "Living Room", "Bedroom", "Garage / Storage", "Whole Home", "Other"].map(space => (
+                      <label key={space} style={{
+                        display: "flex", alignItems: "center", gap: 6, padding: "8px 14px",
+                        border: "1px solid var(--sand)", borderRadius: 4, cursor: "pointer",
+                        fontFamily: "var(--font-body)", fontSize: 13, color: "var(--cream)",
+                        background: (formData.spaces || []).includes(space) ? "var(--sage)" : "transparent",
+                        transition: "all 0.2s"
+                      }}>
+                        <input type="checkbox" style={{ display: "none" }}
+                          checked={(formData.spaces || []).includes(space)}
+                          onChange={() => {
+                            const current = formData.spaces || [];
+                            setFormData({
+                              ...formData,
+                              spaces: current.includes(space) ? current.filter(s => s !== space) : [...current, space]
+                            });
+                          }}
+                        />
+                        {space}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+                <div className="rr-form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, gridColumn: "1 / -1" }}>
+                  <div>
+                    <label>Budget Range</label>
+                    <select value={formData.budget || ""} onChange={(e) => setFormData({ ...formData, budget: e.target.value })}>
+                      <option value="">Select budget...</option>
+                      <option>Under $300</option>
+                      <option>$300 - $500</option>
+                      <option>$500 - $1,000</option>
+                      <option>$1,000 - $2,500</option>
+                      <option>$2,500+</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label>Timeline</label>
+                    <select value={formData.timeline || ""} onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}>
+                      <option value="">When do you need this?</option>
+                      <option>This week</option>
+                      <option>Within 2 weeks</option>
+                      <option>Within a month</option>
+                      <option>Flexible / no rush</option>
+                    </select>
+                  </div>
                 </div>
                 <div className="rr-form-full">
                   <label>Tell us about your space</label>
