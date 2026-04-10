@@ -514,7 +514,22 @@ export default function Settings() {
           <div className="st-info-row"><span className="st-info-label">Location</span><span className="st-info-value">Greater Phoenix, Arizona</span></div>
           <div className="st-info-row"><span className="st-info-label">Website</span><span className="st-info-value">roromode.com</span></div>
           <div className="st-info-row"><span className="st-info-label">Hours</span><span className="st-info-value">Mon-Fri 9AM-5PM, Sat 10AM-3PM</span></div>
-          <div className="st-info-row" style={{ borderBottom: "none" }}><span className="st-info-label">Payment</span><span className="st-info-value">Cash, Venmo, Zelle, Credit Card</span></div>
+          <div className="st-info-row"><span className="st-info-label">Payment</span><span className="st-info-value">Cash, Venmo, Zelle, Credit Card</span></div>
+          <div className="st-info-row" style={{ borderBottom: "none" }}>
+            <span className="st-info-label">Account</span>
+            <span className="st-info-value">
+              <button onClick={async () => {
+                const { error } = await supabase.auth.resetPasswordForEmail("itsroromode@gmail.com");
+                if (error) alert("Error: " + error.message);
+                else alert("Password reset email sent to itsroromode@gmail.com!");
+              }} style={{
+                background: "none", border: "1px solid #e8e0d4", padding: "6px 16px",
+                fontFamily: "'DM Sans', sans-serif", fontSize: 13, cursor: "pointer", color: "#7a8c6e",
+              }}>
+                Change Password
+              </button>
+            </span>
+          </div>
         </div>
       )}
     </>

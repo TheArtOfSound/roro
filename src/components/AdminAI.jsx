@@ -4,14 +4,35 @@ import { supabase } from "../lib/supabase";
 
 const KNOWLEDGE = [
   {
-    triggers: ["booking", "schedule", "appointment", "book"],
+    triggers: ["book a client", "create booking", "new booking", "schedule a client", "book someone", "add booking", "how do i book"],
     responses: [
       {
-        text: "Here's what I can help with for bookings:",
+        text: "To book a client:\n\n1. Go to Bookings\n2. Click '+ Create Booking' at the top\n3. Select the client, choose the service, set the date/time and price\n4. Click Save — it'll be set to 'pending' and you can accept/schedule from there.\n\nOr I can take you right there:",
+        actions: [
+          { label: "→ Create a new booking now", link: "/admin/bookings", action: "create" },
+        ],
+      },
+    ],
+  },
+  {
+    triggers: ["booking", "schedule", "appointment", "bookings"],
+    responses: [
+      {
+        text: "Here's what I can do with bookings:",
         actions: [
           { label: "View all bookings", link: "/admin/bookings" },
           { label: "Create new booking", link: "/admin/bookings", action: "create" },
-          { label: "View pending bookings", link: "/admin/bookings?filter=pending" },
+        ],
+      },
+    ],
+  },
+  {
+    triggers: ["add a client", "new client", "create client", "add client", "add someone"],
+    responses: [
+      {
+        text: "To add a new client:\n\n1. Go to Clients\n2. Click '+ Add Client'\n3. Enter their name, email, and phone\n4. Save — they'll appear in your client list and you can create bookings for them.\n\nOr jump right there:",
+        actions: [
+          { label: "→ Add a new client now", link: "/admin/clients", action: "create" },
         ],
       },
     ],
@@ -147,7 +168,62 @@ const KNOWLEDGE = [
     ],
   },
   {
-    triggers: ["help", "how do i", "what can", "guide"],
+    triggers: ["change password", "reset password", "update password", "new password", "password"],
+    responses: [
+      {
+        text: "To change your admin password:\n\n1. Go to your Supabase dashboard\n2. Navigate to Authentication → Users\n3. Find your account and reset the password\n\nOr you can use the Supabase password reset flow by signing out and clicking 'Forgot Password' on the login page.",
+        actions: [
+          { label: "Go to Supabase Auth", link: "https://supabase.com/dashboard/project/ndwpnoptkwoiponpnxxn/auth/users", external: true },
+        ],
+      },
+    ],
+  },
+  {
+    triggers: ["create invoice", "new invoice", "send invoice", "bill a client", "charge"],
+    responses: [
+      {
+        text: "To create an invoice:\n\n1. Go to Invoices → '+ Create Invoice'\n2. Select the client and optionally link a booking\n3. Add line items (description, quantity, price)\n4. Set a due date and optionally add a Stripe payment link\n5. Save as Draft or Save & Send\n\nLet me take you there:",
+        actions: [
+          { label: "→ Create invoice now", link: "/admin/invoices/new" },
+        ],
+      },
+    ],
+  },
+  {
+    triggers: ["change price", "update price", "edit price", "change pricing", "update my prices"],
+    responses: [
+      {
+        text: "To change your service pricing:\n\n1. Go to Settings → Services & Pricing tab\n2. Click 'Edit' on the service you want to change\n3. Update the price in the 'Price Display' field\n4. Click Save\n\nChanges show on your website immediately!",
+        actions: [
+          { label: "→ Edit prices now", link: "/admin/settings" },
+        ],
+      },
+    ],
+  },
+  {
+    triggers: ["add service", "new service", "create service", "add a new service"],
+    responses: [
+      {
+        text: "To add a new service to your website:\n\n1. Go to Settings → Services & Pricing\n2. Click '+ Add Service'\n3. Fill in the name, description, price, and details\n4. Save — it appears on roromode.com immediately",
+        actions: [
+          { label: "→ Add a service now", link: "/admin/settings" },
+        ],
+      },
+    ],
+  },
+  {
+    triggers: ["follow up", "follow-up", "need to call", "remind me", "task"],
+    responses: [
+      {
+        text: "To create a follow-up task:\n\n1. Go to Tasks\n2. Click 'New Task'\n3. Select the client, describe what needs to happen, and set a due date\n4. You'll see it in your task list with call/text/email quick actions",
+        actions: [
+          { label: "→ Create a task now", link: "/admin/ai-tasks" },
+        ],
+      },
+    ],
+  },
+  {
+    triggers: ["help me", "what can you do", "show me everything", "guide me"],
     responses: [
       {
         text: "Here's everything you can do from your admin panel:",
