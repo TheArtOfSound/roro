@@ -1427,14 +1427,15 @@ export default function RoRoMode() {
           list-style: none;
         }
 
-        .rr-footer-links a {
+        .rr-footer-links a, .rr-footer-links span {
           font-size: 13px;
           color: rgba(245,240,232,0.4);
           text-decoration: none;
           transition: color 0.3s;
+          cursor: pointer;
         }
 
-        .rr-footer-links a:hover {
+        .rr-footer-links a:hover, .rr-footer-links span:hover {
           color: var(--sage-light);
         }
 
@@ -1862,7 +1863,7 @@ export default function RoRoMode() {
 
       {/* HERO IMAGE STRIP */}
       <section className="rr-hero-strip">
-        <img src={pantryEntry} alt="RoRo Mode pantry transformation" style={{ objectPosition: "center 30%" }} />
+        <img src={`${import.meta.env.BASE_URL}images/hero-room.jpg`} alt="RoRo Mode styled room transformation" style={{ objectPosition: "center 40%", filter: "contrast(1.15) saturate(1.1) brightness(1.05)" }} />
         <div className="rr-hero-strip-overlay">
           <div className="rr-hero-strip-text">
             <h2>Real spaces, <em>real transformations</em></h2>
@@ -1874,7 +1875,7 @@ export default function RoRoMode() {
       {/* TRUST BADGES */}
       <section className="rr-badges">
         <div className="rr-badges-inner">
-          {["Woman-Owned", "Eco-Friendly", "Budget-Conscious", "Locally Sourced", "Custom Solutions", "Same-Week Booking"].map((b, i) => (
+          {["Woman-Owned", "Eco-Friendly", "Budget-Conscious", "Custom Solutions", "Same-Week Booking"].map((b, i) => (
             <span className="rr-badge-pill" key={i}>{b}</span>
           ))}
         </div>
@@ -1950,7 +1951,7 @@ export default function RoRoMode() {
             <p>
               Sustainable. Functional. Beautiful. That's the mode.
             </p>
-            <div className="rr-about-sig">— RoRo ✝</div>
+            <div className="rr-about-sig">— RoRo</div>
           </div>
         </FadeIn>
       </section>
@@ -1990,9 +1991,14 @@ export default function RoRoMode() {
               Tell us about your space and we'll get back to you within 48 hours.
             </p>
             <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: 12, marginBottom: 8 }}>
-              <a href="tel:+16624794007" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", background: "var(--sage)", color: "white", textDecoration: "none", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>
-                📞 Call or Text (662) 479-4007
-              </a>
+              <div style={{ textAlign: "center" }}>
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", background: "var(--sage)", color: "white", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>
+                  (662) 479-4007
+                </span>
+                <div style={{ fontSize: 11, color: "rgba(245,240,232,0.5)", marginTop: 6, fontFamily: "var(--font-body)" }}>
+                  You can also text this number
+                </div>
+              </div>
               <a href="mailto:itsroromode@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", border: "1px solid rgba(245,240,232,0.3)", color: "var(--cream)", textDecoration: "none", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 500, letterSpacing: 1, textTransform: "uppercase" }}>
                 ✉ Email Us
               </a>
@@ -2135,7 +2141,7 @@ export default function RoRoMode() {
         <div className="rr-footer-inner">
           <div className="rr-footer-brand">RoRo Mode</div>
           <ul className="rr-footer-links">
-            <li><a href="tel:+16624794007">Call or Text: (662) 479-4007</a></li>
+            <li><span>(662) 479-4007</span></li>
             <li><a href="mailto:itsroromode@gmail.com">Email</a></li>
             <li><a href="https://www.instagram.com/_roro_mode_" target="_blank" rel="noopener noreferrer">Instagram</a></li>
             <li><span role="button" tabIndex={0} onClick={() => scrollTo("contact")}>Contact</span></li>
