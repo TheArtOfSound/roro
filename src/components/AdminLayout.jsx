@@ -71,7 +71,19 @@ export default function AdminLayout() {
         @media (max-width: 768px) {
           .admin-main { margin-left: 0; }
           .admin-hamburger { display: block; }
-          .admin-content { padding: 20px; }
+          .admin-topbar { padding: 12px 16px; }
+          .admin-content { padding: 12px; }
+          .admin-user span { display: none; }
+          .admin-signout { padding: 4px 10px; font-size: 11px; }
+        }
+        @media (max-width: 768px) {
+          /* Make all admin tables scrollable horizontally */
+          table { display: block; overflow-x: auto; white-space: nowrap; }
+          /* Stack grid layouts */
+          [style*="grid-template-columns: 2fr"] { grid-template-columns: 1fr !important; }
+          [style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+          /* Full-width cards */
+          [style*="display: grid"][style*="gap: 24px"] { grid-template-columns: 1fr !important; }
         }
       `}</style>
       <div className="admin-layout">

@@ -25,9 +25,88 @@ export default function AITasks() {
     due_date: "",
   });
 
+  // AI Receptionist quick import state
+  const [services, setServices] = useState([]);
+  const [showImport, setShowImport] = useState(false);
+  const [importSaving, setImportSaving] = useState(false);
+  const [importForm, setImportForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    service: "",
+    preferred_date: "",
+    notes: "Booked via AI Receptionist",
+  });
+
   useEffect(() => {
     loadTasks();
+    loadServices();
   }, []);
+
+  async function loadServices() {
+    const { data } = await supabase.from("services").select("id, title").eq("active", true).order("sort_order");
+    setServices(data || []);
+  }
+
+  async function handleImportBooking(e) {
+    e.preventDefault();
+    if (!importForm.name || !importForm.service) {
+      setToast({ message: "Name and service are required", type: "error" });
+      return;
+    }
+    setImportSaving(true);
+    try {
+      // Find or create client by email
+      let clientId = null;
+      if (importForm.email) {
+        const { data: existing } = await supabase
+          .from("clients")
+          .select("id")
+          .eq("email", importForm.email)
+          .single();
+
+        if (existing) {
+          clientId = existing.id;
+        } else {
+          const { data: newClient, error: clientError } = await supabase
+            .from("clients")
+            .insert({
+              name: importForm.name,
+              email: importForm.email,
+              phone: importForm.phone || null,
+            })
+            .select("id")
+            .single();
+
+          if (clientError) {
+            setToast({ message: clientError.message, type: "error" });
+            return;
+          }
+          clientId = newClient.id;
+        }
+      }
+
+      // Create booking
+      const { error: bookingError } = await supabase.from("bookings").insert({
+        client_id: clientId,
+        service: importForm.service,
+        scheduled_at: importForm.preferred_date ? `${importForm.preferred_date}T00:00:00` : null,
+        notes: importForm.notes || null,
+        status: "pending",
+      });
+
+      if (bookingError) {
+        setToast({ message: bookingError.message, type: "error" });
+        return;
+      }
+
+      setToast({ message: "Booking created from AI call!", type: "success" });
+      setImportForm({ name: "", email: "", phone: "", service: "", preferred_date: "", notes: "Booked via AI Receptionist" });
+      setShowImport(false);
+    } finally {
+      setImportSaving(false);
+    }
+  }
 
   async function loadTasks() {
     const [tasksRes, clientsRes] = await Promise.all([
@@ -169,6 +248,22 @@ export default function AITasks() {
           text-decoration: none; border: 1px solid #e8e0d4; transition: all 0.2s;
         }
         .at-callout:hover { border-color: #7a8c6e; color: #7a8c6e; }
+        .ai-section {
+          background: white; border: 1px solid #e8e0d4; padding: 28px 32px; margin-bottom: 28px;
+        }
+        .ai-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+        .ai-section-title {
+          font-family: 'Playfair Display', Georgia, serif; font-size: 20px; font-weight: 400; color: #1a1a1a;
+        }
+        .ai-section-links { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .ai-section-link {
+          display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px;
+          font-family: 'DM Sans', sans-serif; font-size: 12px; font-weight: 500;
+          letter-spacing: 0.5px; text-transform: uppercase; text-decoration: none;
+          color: #6b6560; border: 1px solid #e8e0d4; transition: all 0.2s; background: white;
+        }
+        .ai-section-link:hover { border-color: #7a8c6e; color: #7a8c6e; }
+        .ai-import-form { margin-top: 20px; padding-top: 20px; border-top: 1px solid #f5f0e8; }
       `}</style>
 
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
