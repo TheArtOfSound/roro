@@ -1954,6 +1954,14 @@ export default function RoRoMode() {
             <p className="rr-contact-sub">
               Tell us about your space and we'll get back to you within 48 hours.
             </p>
+            <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: 12, marginBottom: 8 }}>
+              <a href="tel:+16624794007" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", background: "var(--sage)", color: "white", textDecoration: "none", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>
+                📞 Call (662) 479-4007
+              </a>
+              <a href="mailto:itsroromode@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", border: "1px solid rgba(245,240,232,0.3)", color: "var(--cream)", textDecoration: "none", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 500, letterSpacing: 1, textTransform: "uppercase" }}>
+                ✉ Email Us
+              </a>
+            </div>
           </FadeIn>
           <div className="rr-form">
             {formSent ? (
@@ -2097,10 +2105,14 @@ export default function RoRoMode() {
         <div className="rr-footer-inner">
           <div className="rr-footer-brand">RoRo Mode</div>
           <ul className="rr-footer-links">
-            <li><a href="https://www.instagram.com/_roro_mode_" target="_blank" rel="noopener">Instagram</a></li>
-            <li><a href="https://www.instagram.com/itsauroraleonard/" target="_blank" rel="noopener">Personal</a></li>
+            <li><a href="tel:+16624794007">Call: (662) 479-4007</a></li>
+            <li><a href="mailto:itsroromode@gmail.com">Email</a></li>
+            <li><a href="https://www.instagram.com/_roro_mode_" target="_blank" rel="noopener noreferrer">Instagram</a></li>
             <li><span role="button" tabIndex={0} onClick={() => scrollTo("contact")}>Contact</span></li>
           </ul>
+          <div style={{ fontSize: 12, color: "rgba(245,240,232,0.3)", marginTop: 8 }}>
+            Greater Phoenix, Arizona — Serving the Valley and beyond
+          </div>
           <div className="rr-footer-copy">
             © 2026 RoRo MODE — Aurora Leonard. All rights reserved. Built with intention.
           </div>
