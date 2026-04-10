@@ -1614,7 +1614,7 @@ export default function RoRoMode() {
       {/* NAV */}
       <nav className={`rr-nav ${scrollY > 60 ? "scrolled" : ""}`}>
         <div className="rr-logo-text">
-          <img src={`${import.meta.env.BASE_URL}images/roro-logo.png`} alt="RoRo Mode" style={{ height: 80, borderRadius: "50%", objectFit: "cover" }} />
+          <img src={`${import.meta.env.BASE_URL}images/roro-logo.png`} alt="RoRo Mode" style={{ height: 120, borderRadius: "50%", objectFit: "cover" }} />
         </div>
         <ul className="rr-nav-links">
           <li><span role="button" tabIndex={0} onClick={() => scrollTo("services")}>Services</span></li>
