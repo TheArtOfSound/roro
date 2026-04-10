@@ -2,7 +2,13 @@ import { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY;
+const API_KEY = import.meta.env.VITE_CEREBRAS_API_KEY || import.meta.env.VITE_GROQ_API_KEY;
+const API_URL = import.meta.env.VITE_CEREBRAS_API_KEY
+  ? "https://api.cerebras.ai/v1/chat/completions"
+  : "https://api.groq.com/openai/v1/chat/completions";
+const MODEL = import.meta.env.VITE_CEREBRAS_API_KEY
+  ? "qwen-3-235b-a22b-instruct-2507"
+  : "llama-3.3-70b-versatile";
 
 const SYSTEM_PROMPT = `You are RoRo AI, the personal business assistant for Aurora Leonard, founder of RoRo Mode — a professional home styling and organizing business in the Greater Phoenix, Arizona area.
 
@@ -118,14 +124,14 @@ export default function AdminAI() {
         ...newHistory.filter(m => m.role !== "system").slice(-8),
       ];
 
-      const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      const res = await fetch(API_URL, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${GROQ_API_KEY}`,
+          "Authorization": `Bearer ${API_KEY}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "llama-3.3-70b-versatile",
+          model: MODEL,
           messages: apiMessages,
           max_tokens: 500,
           temperature: 0.7,
