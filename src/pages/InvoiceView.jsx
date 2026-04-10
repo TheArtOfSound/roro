@@ -85,7 +85,7 @@ export default function InvoiceView() {
   const isPaid = invoice.status === "paid";
   const canPay = ["sent", "overdue"].includes(invoice.status);
 
-  const venmoUrl = `https://venmo.com/Aurora-Leonard?txn=pay&amount=${total}&note=Invoice-${invoice.invoice_number || ""}`;
+  const venmoUrl = `https://venmo.com/u/Aurora_Leonard?txn=pay&amount=${total}&note=Invoice-${invoice.invoice_number || ""}`;
 
   return (
     <div style={styles.page}>
@@ -249,13 +249,13 @@ export default function InvoiceView() {
                 {/* Zelle */}
                 <div style={styles.payCard}>
                   <div style={styles.payCardLabel}>Zelle</div>
-                  <div style={styles.payCardInfo}>itsroromode@gmail.com</div>
-                  <div style={{ display: "flex", gap: 8 }}>
+                  <div style={styles.payCardInfo}>Send to Aurora's phone number</div>
+                  <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                     <button
                       className="iv-copy-btn"
-                      onClick={() => copyToClipboard("itsroromode@gmail.com", "zelle")}
+                      onClick={() => copyToClipboard("6024886362", "zelle")}
                     >
-                      {copied === "zelle" ? "Copied!" : "Copy Email"}
+                      {copied === "zelle" ? "Copied!" : "Copy Phone #"}
                     </button>
                     <button
                       className="iv-copy-btn"
@@ -269,13 +269,9 @@ export default function InvoiceView() {
                 {/* Cash App */}
                 <div style={styles.payCard}>
                   <div style={styles.payCardLabel}>Cash App</div>
-                  <div style={styles.payCardInfo}>$RoRoMode</div>
-                  <button
-                    className="iv-copy-btn"
-                    onClick={() => copyToClipboard("$RoRoMode", "cashapp")}
-                  >
-                    {copied === "cashapp" ? "Copied!" : "Copy Tag"}
-                  </button>
+                  <a href={`https://cash.app/$AuroraLeonard/${total}`} target="_blank" rel="noopener noreferrer" className="iv-btn iv-btn-cashapp" style={{ textDecoration: "none", textAlign: "center" }}>
+                    Pay $AuroraLeonard
+                  </a>
                 </div>
               </div>
 
