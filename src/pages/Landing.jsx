@@ -276,7 +276,7 @@ export default function RoRoMode() {
 
         /* HERO */
         .rr-hero {
-          min-height: 90vh;
+          min-height: 85vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -323,7 +323,7 @@ export default function RoRoMode() {
           letter-spacing: 2.5px;
           text-transform: uppercase;
           color: var(--text-light);
-          margin-bottom: 40px;
+          margin-bottom: 24px;
         }
 
         .rr-hero-badge::before {
@@ -354,7 +354,7 @@ export default function RoRoMode() {
           line-height: 1.7;
           color: var(--text-light);
           max-width: 560px;
-          margin: 0 auto 48px;
+          margin: 0 auto 32px;
         }
 
         .rr-hero-ctas {
@@ -442,7 +442,7 @@ export default function RoRoMode() {
 
         /* PHILOSOPHY STRIP */
         .rr-philosophy {
-          padding: 80px 40px;
+          padding: 48px 40px;
           background: var(--charcoal);
           color: var(--cream);
           overflow: hidden;
@@ -453,7 +453,7 @@ export default function RoRoMode() {
           margin: 0 auto;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 80px;
+          gap: 40px;
           align-items: center;
         }
 
@@ -496,7 +496,7 @@ export default function RoRoMode() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 20px 0;
+          padding: 12px 0;
           border-bottom: 1px solid rgba(245,240,232,0.1);
           transition: all 0.3s;
         }
@@ -520,7 +520,7 @@ export default function RoRoMode() {
 
         /* SERVICES */
         .rr-services {
-          padding: 120px 40px;
+          padding: 48px 40px;
           max-width: 1100px;
           margin: 0 auto;
         }
@@ -540,7 +540,7 @@ export default function RoRoMode() {
           font-weight: 400;
           line-height: 1.2;
           color: var(--charcoal);
-          margin-bottom: 60px;
+          margin-bottom: 32px;
           max-width: 600px;
         }
 
@@ -641,7 +641,7 @@ export default function RoRoMode() {
 
         /* APPROACH */
         .rr-approach {
-          padding: 100px 40px;
+          padding: 48px 40px;
           background: var(--cream);
         }
 
@@ -652,13 +652,13 @@ export default function RoRoMode() {
 
         .rr-approach-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 40px;
-          margin-top: 60px;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+          margin-top: 32px;
         }
 
         .rr-approach-card {
-          padding: 40px 32px;
+          padding: 24px 20px;
           background: var(--warm-white);
           border: 1px solid var(--sand);
           transition: all 0.4s;
@@ -671,10 +671,10 @@ export default function RoRoMode() {
 
         .rr-approach-num {
           font-family: var(--font-display);
-          font-size: 48px;
+          font-size: 36px;
           font-weight: 400;
           color: var(--sand);
-          margin-bottom: 20px;
+          margin-bottom: 8px;
           line-height: 1;
         }
 
@@ -695,15 +695,22 @@ export default function RoRoMode() {
 
         /* TESTIMONIALS */
         .rr-testimonials {
-          padding: 100px 40px;
-          max-width: 900px;
+          padding: 48px 40px;
+          max-width: 1100px;
           margin: 0 auto;
           text-align: center;
         }
 
+        .rr-testimonials-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+          margin-top: 24px;
+        }
+
         .rr-testimonial-card {
-          padding: 48px;
-          margin-top: 40px;
+          padding: 28px 24px;
+          margin-top: 0;
           background: var(--cream);
           border: 1px solid var(--sand);
           position: relative;
@@ -712,7 +719,7 @@ export default function RoRoMode() {
         .rr-testimonial-card::before {
           content: '"';
           font-family: var(--font-display);
-          font-size: 120px;
+          font-size: 72px;
           color: var(--sand);
           position: absolute;
           top: -10px;
@@ -722,7 +729,7 @@ export default function RoRoMode() {
 
         .rr-testimonial-text {
           font-family: var(--font-display);
-          font-size: 22px;
+          font-size: 16px;
           font-weight: 400;
           font-style: italic;
           line-height: 1.6;
@@ -742,7 +749,7 @@ export default function RoRoMode() {
 
         /* SMALL BIZ */
         .rr-smallbiz {
-          padding: 80px 40px;
+          padding: 36px 40px;
           background: var(--sage);
           color: var(--warm-white);
           text-align: center;
@@ -776,17 +783,18 @@ export default function RoRoMode() {
 
         /* ABOUT */
         .rr-about {
-          padding: 120px 40px;
+          padding: 60px 40px;
           max-width: 1100px;
           margin: 0 auto;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 80px;
+          gap: 48px;
           align-items: center;
         }
 
         .rr-about-visual {
-          aspect-ratio: 4/5;
+          aspect-ratio: 4/4;
+          max-height: 450px;
           background: var(--sand);
           position: relative;
           overflow: hidden;
@@ -825,7 +833,7 @@ export default function RoRoMode() {
 
         /* PORTFOLIO GALLERY */
         .rr-portfolio {
-          padding: 120px 40px;
+          padding: 60px 40px;
           background: var(--charcoal);
           color: var(--cream);
           overflow: hidden;
@@ -851,13 +859,13 @@ export default function RoRoMode() {
           color: rgba(245,240,232,0.5);
           max-width: 500px;
           line-height: 1.7;
-          margin-bottom: 60px;
+          margin-bottom: 32px;
         }
 
         .rr-portfolio-grid {
           display: grid;
           grid-template-columns: repeat(12, 1fr);
-          grid-auto-rows: 200px;
+          grid-auto-rows: 140px;
           gap: 12px;
         }
 
@@ -1029,8 +1037,8 @@ export default function RoRoMode() {
 
         /* HERO IMAGE STRIP */
         .rr-hero-strip {
-          height: 60vh;
-          min-height: 400px;
+          height: 30vh;
+          min-height: 200px;
           position: relative;
           overflow: hidden;
         }
@@ -1077,7 +1085,7 @@ export default function RoRoMode() {
 
         /* BADGES SECTION */
         .rr-badges {
-          padding: 60px 40px;
+          padding: 20px 40px;
           background: var(--warm-white);
           border-bottom: 1px solid var(--sand);
         }
@@ -1122,7 +1130,7 @@ export default function RoRoMode() {
 
         /* INSTAGRAM CTA */
         .rr-instagram {
-          padding: 80px 40px;
+          padding: 36px 40px;
           text-align: center;
           background: var(--warm-white);
         }
@@ -1219,7 +1227,7 @@ export default function RoRoMode() {
 
         /* CONTACT */
         .rr-contact {
-          padding: 120px 40px;
+          padding: 60px 40px;
           background: var(--charcoal);
           color: var(--cream);
         }
@@ -1246,7 +1254,7 @@ export default function RoRoMode() {
           font-size: 16px;
           font-weight: 300;
           color: rgba(245,240,232,0.6);
-          margin-bottom: 48px;
+          margin-bottom: 24px;
         }
 
         .rr-form {
@@ -1344,7 +1352,7 @@ export default function RoRoMode() {
 
         /* FOOTER */
         .rr-footer {
-          padding: 60px 40px 40px;
+          padding: 36px 40px 24px;
           background: var(--black);
           color: rgba(245,240,232,0.4);
         }
@@ -1463,6 +1471,7 @@ export default function RoRoMode() {
             font-size: 13px;
           }
           .rr-approach-grid { grid-template-columns: 1fr; }
+          .rr-testimonials-grid { grid-template-columns: 1fr; }
           .rr-about { grid-template-columns: 1fr; gap: 40px; }
           .rr-about-visual { max-height: 400px; aspect-ratio: auto; }
           .rr-portfolio-grid {
@@ -1549,19 +1558,16 @@ export default function RoRoMode() {
       </section>
 
       {/* SOCIAL PROOF */}
-      <section style={{ padding: "40px 20px", background: "var(--warm-white)", textAlign: "center" }}>
-        <FadeIn>
-          <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", justifyContent: "center", gap: 48, alignItems: "center", flexWrap: "wrap" }}>
-            <div style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-light)" }}>Trusted by homeowners across Texas</div>
-            <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--text-light)", letterSpacing: 1 }}>50+ Spaces Transformed</span>
-              <span style={{ color: "var(--sand)" }}>|</span>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--text-light)", letterSpacing: 1 }}>5-Star Reviews</span>
-              <span style={{ color: "var(--sand)" }}>|</span>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--text-light)", letterSpacing: 1 }}>Same-Week Availability</span>
-            </div>
-          </div>
-        </FadeIn>
+      <section style={{ padding: "12px 20px", background: "var(--warm-white)", textAlign: "center" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", justifyContent: "center", gap: 24, alignItems: "center", flexWrap: "nowrap" }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-light)", whiteSpace: "nowrap" }}>Trusted by homeowners across the Greater Phoenix area</div>
+          <span style={{ color: "var(--sand)" }}>|</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1, whiteSpace: "nowrap" }}>50+ Spaces Transformed</span>
+          <span style={{ color: "var(--sand)" }}>|</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1, whiteSpace: "nowrap" }}>5-Star Reviews</span>
+          <span style={{ color: "var(--sand)" }}>|</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 14, color: "var(--text-light)", letterSpacing: 1, whiteSpace: "nowrap" }}>Same-Week Availability</span>
+        </div>
       </section>
 
       {/* PHILOSOPHY */}
@@ -1601,7 +1607,7 @@ export default function RoRoMode() {
           <h2 className="rr-section-heading">What we transform</h2>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, maxWidth: 1200, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, maxWidth: 1200, margin: "0 auto" }}>
             {SERVICES.map((svc, i) => (
               <div
                 key={i}
@@ -1620,7 +1626,7 @@ export default function RoRoMode() {
                   <img
                     src={`${import.meta.env.BASE_URL}images/${svc.image}`}
                     alt={svc.title}
-                    style={{ width: "100%", height: 280, objectFit: "contain", display: "block" }}
+                    style={{ width: "100%", height: 160, objectFit: "contain", display: "block" }}
                   />
                 </div>
                 {/* Card content */}
@@ -1712,16 +1718,18 @@ export default function RoRoMode() {
           <h2 className="rr-section-heading">
             What happens when your space finally works
           </h2>
-          {TESTIMONIALS.map((t, i) => (
-            <div className="rr-testimonial-card" key={i}>
-              <p className="rr-testimonial-text">
-                {t.text}
-              </p>
-              <span className="rr-testimonial-author">
-                {t.author}
-              </span>
-            </div>
-          ))}
+          <div className="rr-testimonials-grid">
+            {TESTIMONIALS.map((t, i) => (
+              <div className="rr-testimonial-card" key={i}>
+                <p className="rr-testimonial-text">
+                  {t.text}
+                </p>
+                <span className="rr-testimonial-author">
+                  {t.author}
+                </span>
+              </div>
+            ))}
+          </div>
         </FadeIn>
       </section>
 
@@ -1837,7 +1845,7 @@ export default function RoRoMode() {
 
       {/* FREE CONSULTATION CTA */}
       <section style={{
-        padding: "60px 40px",
+        padding: "36px 40px",
         background: "linear-gradient(135deg, var(--sage) 0%, var(--sage-light) 100%)",
         textAlign: "center"
       }}>
