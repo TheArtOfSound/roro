@@ -112,6 +112,12 @@ export default function AdminAI() {
     const newHistory = [...chatHistory, { role: "user", content: trimmed }];
 
     try {
+      // Always include system prompt + last 8 conversation messages
+      const apiMessages = [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...newHistory.filter(m => m.role !== "system").slice(-8),
+      ];
+
       const res = await fetch("https://api.groq.com/openai/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -120,14 +126,20 @@ export default function AdminAI() {
         },
         body: JSON.stringify({
           model: "llama-3.3-70b-versatile",
-          messages: newHistory.slice(-10), // Keep last 10 messages for context
+          messages: apiMessages,
           max_tokens: 500,
           temperature: 0.7,
         }),
       });
 
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error("Groq API error:", res.status, errText);
+        throw new Error("API error: " + res.status);
+      }
+
       const data = await res.json();
-      const reply = data.choices?.[0]?.message?.content || "Sorry, I had trouble processing that. Try again!";
+      const reply = data.choices?.[0]?.message?.content || "Hmm, I didn't get a response. Try asking again!";
       const { cleanText, actions } = parseResponse(reply);
 
       setChatHistory([...newHistory, { role: "assistant", content: reply }]);

@@ -321,14 +321,10 @@ export default function RoRoMode() {
           position: absolute;
           inset: 0;
           z-index: 0;
-          opacity: 0.04;
-          background-image:
-            radial-gradient(circle at 0% 50%, var(--charcoal) 50%, transparent 50%),
-            radial-gradient(circle at 100% 50%, var(--charcoal) 50%, transparent 50%),
-            radial-gradient(circle at 50% 0%, var(--charcoal) 50%, transparent 50%),
-            radial-gradient(circle at 50% 100%, var(--charcoal) 50%, transparent 50%);
-          background-size: 60px 60px;
-          background-position: 0 0, 30px 0, 0 0, 30px 30px;
+          opacity: 0.03;
+          background-image: url('/images/pattern.png');
+          background-size: 400px;
+          background-repeat: repeat;
         }
 
         .rr-hero-grain {
@@ -1082,8 +1078,8 @@ export default function RoRoMode() {
 
         /* HERO IMAGE STRIP */
         .rr-hero-strip {
-          height: 30vh;
-          min-height: 200px;
+          height: 45vh;
+          min-height: 300px;
           position: relative;
           overflow: hidden;
         }
@@ -1097,7 +1093,7 @@ export default function RoRoMode() {
         .rr-hero-strip-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(transparent 30%, rgba(17,17,17,0.6));
+          background: linear-gradient(transparent 20%, rgba(17,17,17,0.75));
           display: flex;
           align-items: flex-end;
           padding: 60px;
@@ -1863,7 +1859,7 @@ export default function RoRoMode() {
 
       {/* HERO IMAGE STRIP */}
       <section className="rr-hero-strip">
-        <img src={`${import.meta.env.BASE_URL}images/hero-room.jpg`} alt="RoRo Mode styled room transformation" style={{ objectPosition: "center 40%", filter: "contrast(1.15) saturate(1.1) brightness(1.05)" }} />
+        <img src={`${import.meta.env.BASE_URL}images/hero-room.jpg`} alt="RoRo Mode styled room transformation" style={{ objectPosition: "center 50%", filter: "contrast(1.35) saturate(1.2) brightness(0.95)" }} />
         <div className="rr-hero-strip-overlay">
           <div className="rr-hero-strip-text">
             <h2>Real spaces, <em>real transformations</em></h2>
