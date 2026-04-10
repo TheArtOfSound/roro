@@ -7,6 +7,7 @@ export default function ClientInvoices() {
   const { user } = useAuth();
   const [invoices, setInvoices] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [clientFound, setClientFound] = useState(false);
 
   useEffect(() => {
     if (user?.email) loadInvoices();
@@ -20,6 +21,7 @@ export default function ClientInvoices() {
       .single();
 
     if (clientData) {
+      setClientFound(true);
       const { data } = await supabase
         .from("invoices")
         .select("*")
@@ -34,6 +36,21 @@ export default function ClientInvoices() {
     return (
       <div style={{ padding: "60px", textAlign: "center", color: "#6b6560", fontFamily: "'DM Sans', sans-serif" }}>
         Loading invoices...
+      </div>
+    );
+  }
+
+  if (!clientFound) {
+    return (
+      <div style={{ padding: "60px 40px", textAlign: "center", fontFamily: "'DM Sans', sans-serif" }}>
+        <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400, fontSize: "24px", color: "#1a1a1a", marginBottom: "16px" }}>
+          Invoices
+        </h2>
+        <p style={{ color: "#6b6560", fontSize: "15px", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto" }}>
+          We haven't set up your client profile yet. Contact Aurora at{" "}
+          <a href="mailto:itsroromode@gmail.com" style={{ color: "#7a8c6e", textDecoration: "none" }}>itsroromode@gmail.com</a>{" "}
+          and she'll get you connected.
+        </p>
       </div>
     );
   }

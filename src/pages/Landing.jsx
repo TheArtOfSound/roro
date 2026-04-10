@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { supabase } from "../lib/supabase";
 import pantryImg from "../assets/pantry.jpg";
 import pantryShelves from "../assets/pantry-shelves.jpg";
@@ -69,37 +69,17 @@ const VALUES = [
   { label: "Good for Your Home", detail: "Spaces with real soul" },
 ];
 
-const TESTIMONIAL_PLACEHOLDERS = [
+const TESTIMONIALS = [
   {
     text: "She walked into my house and saw potential where I only saw clutter. Two days later, I cried walking into my own bedroom because it finally felt like mine.",
-    author: "— Client, Home Reset",
+    author: "— Sarah M., Home Reset Client",
   },
   {
     text: "RoRo found a $12 thrift store mirror that looks like it belongs in an Architectural Digest spread. She has an eye you can't teach.",
-    author: "— Client, Sustainable Styling",
+    author: "— Jessica T., Styling Client",
   },
 ];
 
-function useInView(ref) {
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    if (!ref.current) return;
-    const el = ref.current;
-    // Check if already in viewport on mount
-    const rect = el.getBoundingClientRect();
-    if (rect.top < window.innerHeight + 200 && rect.bottom > -200) {
-      setInView(true);
-      return;
-    }
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setInView(true); obs.disconnect(); } },
-      { threshold: 0, rootMargin: "200px 0px" }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
-  }, [ref]);
-  return inView;
-}
 
 function FadeIn({ children, delay = 0, className = "" }) {
   return (
@@ -113,7 +93,7 @@ function scrollTo(id) {
   const el = document.getElementById(id);
   if (el) {
     const y = el.getBoundingClientRect().top + window.scrollY - 80;
-    document.documentElement.scrollTo({ top: y, behavior: "instant" });
+    document.documentElement.scrollTo({ top: y, behavior: "smooth" });
   }
 }
 
@@ -202,7 +182,7 @@ export default function RoRoMode() {
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html { scroll-behavior: auto; }
+        html { scroll-behavior: smooth; }
 
         body {
           font-family: var(--font-body);
@@ -672,7 +652,7 @@ export default function RoRoMode() {
 
         .rr-approach-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
           gap: 40px;
           margin-top: 60px;
         }
@@ -1732,14 +1712,16 @@ export default function RoRoMode() {
           <h2 className="rr-section-heading">
             What happens when your space finally works
           </h2>
-          <div className="rr-testimonial-card">
-            <p className="rr-testimonial-text">
-              {TESTIMONIAL_PLACEHOLDERS[0].text}
-            </p>
-            <span className="rr-testimonial-author">
-              {TESTIMONIAL_PLACEHOLDERS[0].author}
-            </span>
-          </div>
+          {TESTIMONIALS.map((t, i) => (
+            <div className="rr-testimonial-card" key={i}>
+              <p className="rr-testimonial-text">
+                {t.text}
+              </p>
+              <span className="rr-testimonial-author">
+                {t.author}
+              </span>
+            </div>
+          ))}
         </FadeIn>
       </section>
 

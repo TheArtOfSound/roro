@@ -17,5 +17,9 @@ export default function ProtectedRoute() {
 
   if (!session) return <Navigate to="/login" replace />;
 
+  if (session?.user?.email !== 'itsroromode@gmail.com') {
+    return <Navigate to="/" replace />;
+  }
+
   return <Outlet />;
 }

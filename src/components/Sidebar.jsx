@@ -135,7 +135,7 @@ export default function Sidebar({ open, onClose }) {
           ))}
         </nav>
         <div className="sidebar-footer">
-          <a href="#/">&larr; View Website</a>
+          <a href="/">&larr; View Website</a>
         </div>
       </aside>
     </>

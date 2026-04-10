@@ -44,7 +44,7 @@ export default function InvoiceCreate() {
     try {
       // Generate invoice number
       const { count } = await supabase.from("invoices").select("*", { count: "exact", head: true });
-      const num = `RORO-2026-${String((count || 0) + 1).padStart(3, "0")}`;
+      const num = `RORO-${new Date().getFullYear()}-${String((count || 0) + 1).padStart(3, "0")}`;
 
       const lineItemsForDb = form.line_items.map((l) => ({
         desc: l.desc, qty: parseFloat(l.qty) || 0, unit_price_cents: Math.round((parseFloat(l.unit_price) || 0) * 100),

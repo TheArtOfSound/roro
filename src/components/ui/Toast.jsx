@@ -11,14 +11,22 @@ export default function Toast({ message, type = "success", onClose }) {
   const border = type === "error" ? "#fecaca" : "#a7f3d0";
 
   return (
-    <div style={{
-      position: "fixed", top: 20, right: 20, zIndex: 9999,
-      padding: "14px 24px", background: bg, color, border: `1px solid ${border}`,
-      fontSize: "14px", fontFamily: "'DM Sans', sans-serif",
-      boxShadow: "0 4px 20px rgba(0,0,0,0.1)", borderRadius: "4px",
-      animation: "fadeInDown 0.3s ease",
-    }}>
-      {message}
-    </div>
+    <>
+      <style>{`
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+      <div style={{
+        position: "fixed", top: 20, right: 20, zIndex: 9999,
+        padding: "14px 24px", background: bg, color, border: `1px solid ${border}`,
+        fontSize: "14px", fontFamily: "'DM Sans', sans-serif",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.1)", borderRadius: "4px",
+        animation: "fadeInDown 0.3s ease",
+      }}>
+        {message}
+      </div>
+    </>
   );
 }

@@ -26,7 +26,7 @@ export default function GiftCardPurchase() {
   });
   const [error, setError] = useState("");
   const [sending, setSending] = useState(false);
-  const [giftCode, setGiftCode] = useState("");
+  // giftCode no longer needed - request flow doesn't generate codes
 
   // Balance check state
   const [checkCode, setCheckCode] = useState("");
@@ -44,16 +44,12 @@ export default function GiftCardPurchase() {
     if (!form.recipient_name.trim()) return setError("Please enter the recipient's name.");
 
     setSending(true);
-    const code = generateGiftCode();
-    const { error: dbError } = await supabase.from("gift_cards").insert({
-      code,
-      amount_cents: selectedAmount,
-      balance_cents: selectedAmount,
-      purchaser_name: form.purchaser_name.trim(),
-      purchaser_email: form.purchaser_email.trim(),
-      recipient_name: form.recipient_name.trim(),
-      recipient_email: form.recipient_email.trim(),
-      personal_message: form.personal_message.trim(),
+    const amountLabel = `$${(selectedAmount / 100).toFixed(0)}`;
+    const body = `Gift Card Request:\n\nAmount: ${amountLabel}\nFrom: ${form.purchaser_name.trim()} (${form.purchaser_email.trim()})\nFor: ${form.recipient_name.trim()}${form.recipient_email.trim() ? ` (${form.recipient_email.trim()})` : ""}\n${form.personal_message.trim() ? `Message: ${form.personal_message.trim()}` : ""}`;
+    const { error: dbError } = await supabase.from("messages").insert({
+      name: form.purchaser_name.trim(),
+      email: form.purchaser_email.trim(),
+      message: body,
     });
     setSending(false);
 
@@ -61,7 +57,6 @@ export default function GiftCardPurchase() {
       setError("Something went wrong. Please try again.");
       return;
     }
-    setGiftCode(code);
     setStep("success");
   }
 
@@ -265,21 +260,20 @@ export default function GiftCardPurchase() {
 
       <div className="gcp-page">
         <nav className="gcp-nav">
-          <a href="#/" className="gcp-logo">Ro<span>Ro</span> Mode</a>
-          <a href="#/" className="gcp-back">&larr; Back to Home</a>
+          <a href="/" className="gcp-logo">Ro<span>Ro</span> Mode</a>
+          <a href="/" className="gcp-back">&larr; Back to Home</a>
         </nav>
 
         {step === "success" ? (
           <div className="gcp-success">
             <div className="gcp-success-icon">&#10003;</div>
-            <h1 className="gcp-success-title">Gift Card Created</h1>
+            <h1 className="gcp-success-title">Request Received</h1>
             <p className="gcp-success-text">
-              A beautiful gift for {form.recipient_name}. Share the code below so they can redeem
-              their RoRo Mode experience.
+              Thank you, {form.purchaser_name}! We have received your gift card request
+              for {form.recipient_name}. Aurora will be in touch shortly to finalize your purchase.
             </p>
-            <div className="gcp-success-code">{giftCode}</div>
             <p className="gcp-success-note">
-              We will send details to {form.recipient_email || "the recipient"} with instructions on how to redeem.
+              We will reach out to {form.purchaser_email} with next steps.
             </p>
           </div>
         ) : (
@@ -346,7 +340,7 @@ export default function GiftCardPurchase() {
                 {error && <div className="gcp-error">{error}</div>}
 
                 <button type="submit" className="gcp-submit" disabled={sending || !selectedAmount}>
-                  {sending ? "Processing..." : selectedAmount ? `Purchase $${(selectedAmount / 100).toFixed(0)} Gift Card` : "Select an Amount"}
+                  {sending ? "Sending Request..." : selectedAmount ? `Request $${(selectedAmount / 100).toFixed(0)} Gift Card` : "Select an Amount"}
                 </button>
               </form>
             </div>

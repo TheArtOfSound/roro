@@ -69,6 +69,21 @@ export default function ClientDashboard() {
     );
   }
 
+  if (!client) {
+    return (
+      <div style={{ padding: "60px 40px", textAlign: "center", fontFamily: "'DM Sans', sans-serif" }}>
+        <h2 style={{ fontFamily: "'Playfair Display', Georgia, serif", fontWeight: 400, fontSize: "24px", color: "#1a1a1a", marginBottom: "16px" }}>
+          Welcome to RoRo MODE
+        </h2>
+        <p style={{ color: "#6b6560", fontSize: "15px", lineHeight: 1.7, maxWidth: "480px", margin: "0 auto" }}>
+          We haven't set up your client profile yet. Contact Aurora at{" "}
+          <a href="mailto:itsroromode@gmail.com" style={{ color: "#7a8c6e", textDecoration: "none" }}>itsroromode@gmail.com</a>{" "}
+          and she'll get you connected.
+        </p>
+      </div>
+    );
+  }
+
   const activeBooking = bookings.find((b) => b.status !== "completed" && b.status !== "cancelled");
   const currentStep = activeBooking ? getStepIndex(activeBooking.status) : -1;
 
@@ -308,7 +323,7 @@ export default function ClientDashboard() {
         <div className="cd-help-text">
           Have a question about your project? Send us a message through the{" "}
           <Link to="/client/messages">Messages</Link> tab or email{" "}
-          <a href="mailto:hello@roromode.com">hello@roromode.com</a>.
+          <a href="mailto:itsroromode@gmail.com">itsroromode@gmail.com</a>.
           <br />
           We typically respond within 24 hours.
         </div>

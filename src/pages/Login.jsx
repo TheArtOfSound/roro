@@ -135,7 +135,7 @@ export default function Login() {
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
-          <a href="#/" className="login-back">&larr; Back to website</a>
+          <a href="/" className="login-back">&larr; Back to website</a>
         </div>
       </div>
     </>

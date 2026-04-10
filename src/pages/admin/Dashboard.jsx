@@ -7,31 +7,43 @@ export default function Dashboard() {
   const [stats, setStats] = useState({ pendingBookings: 0, unreadMessages: 0, unpaidInvoices: 0, totalClients: 0 });
   const [recentBookings, setRecentBookings] = useState([]);
   const [recentMessages, setRecentMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     loadDashboard();
   }, []);
 
   async function loadDashboard() {
-    const [
-      { count: pendingBookings },
-      { count: unreadMessages },
-      { count: unpaidInvoices },
-      { count: totalClients },
-      { data: bookings },
-      { data: messages },
-    ] = await Promise.all([
-      supabase.from("bookings").select("*", { count: "exact", head: true }).eq("status", "pending"),
-      supabase.from("messages").select("*", { count: "exact", head: true }).eq("is_read", false),
-      supabase.from("invoices").select("*", { count: "exact", head: true }).in("status", ["sent", "overdue"]),
-      supabase.from("clients").select("*", { count: "exact", head: true }),
-      supabase.from("bookings").select("*, clients(name)").order("created_at", { ascending: false }).limit(5),
-      supabase.from("messages").select("*").order("created_at", { ascending: false }).limit(5),
-    ]);
+    try {
+      setLoading(true);
+      setError(null);
 
-    setStats({ pendingBookings: pendingBookings || 0, unreadMessages: unreadMessages || 0, unpaidInvoices: unpaidInvoices || 0, totalClients: totalClients || 0 });
-    setRecentBookings(bookings || []);
-    setRecentMessages(messages || []);
+      const [
+        { count: pendingBookings },
+        { count: unreadMessages },
+        { count: unpaidInvoices },
+        { count: totalClients },
+        { data: bookings },
+        { data: messages },
+      ] = await Promise.all([
+        supabase.from("bookings").select("*", { count: "exact", head: true }).eq("status", "pending"),
+        supabase.from("messages").select("*", { count: "exact", head: true }).eq("is_read", false),
+        supabase.from("invoices").select("*", { count: "exact", head: true }).in("status", ["sent", "overdue"]),
+        supabase.from("clients").select("*", { count: "exact", head: true }),
+        supabase.from("bookings").select("*, clients(name)").order("created_at", { ascending: false }).limit(5),
+        supabase.from("messages").select("*").order("created_at", { ascending: false }).limit(5),
+      ]);
+
+      setStats({ pendingBookings: pendingBookings || 0, unreadMessages: unreadMessages || 0, unpaidInvoices: unpaidInvoices || 0, totalClients: totalClients || 0 });
+      setRecentBookings(bookings || []);
+      setRecentMessages(messages || []);
+    } catch (err) {
+      console.error("Dashboard load error:", err);
+      setError("Something went wrong loading the dashboard. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   const statCards = [
@@ -127,60 +139,107 @@ export default function Dashboard() {
           background: white;
           border: 1px solid #e8e0d4;
         }
+        .dash-loading {
+          padding: 60px;
+          text-align: center;
+          color: #6b6560;
+          font-size: 14px;
+          font-family: 'DM Sans', sans-serif;
+        }
+        .dash-error {
+          padding: 32px;
+          text-align: center;
+          background: #fee2e2;
+          border: 1px solid #fecaca;
+          color: #991b1b;
+          font-size: 14px;
+          font-family: 'DM Sans', sans-serif;
+          margin-bottom: 24px;
+        }
+        .dash-retry {
+          margin-top: 12px;
+          padding: 10px 20px;
+          font-size: 12px;
+          font-family: 'DM Sans', sans-serif;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          cursor: pointer;
+          background: #1a1a1a;
+          color: #f5f0e8;
+          border: none;
+          transition: all 0.2s;
+        }
+        .dash-retry:hover { background: #7a8c6e; }
       `}</style>
 
       <h1 className="dash-title">Dashboard</h1>
 
-      <div className="dash-stats">
-        {statCards.map((s) => (
-          <Link to={s.link} key={s.label} className="dash-stat-card">
-            <div className="dash-stat-value" style={{ color: s.color }}>{s.value}</div>
-            <div className="dash-stat-label">{s.label}</div>
-          </Link>
-        ))}
-      </div>
+      {loading && (
+        <div className="dash-loading">Loading...</div>
+      )}
 
-      <div className="dash-section">
-        <div className="dash-section-title">Recent Bookings</div>
-        {recentBookings.length === 0 ? (
-          <div className="dash-empty">No bookings yet. They'll show up here when clients book through your site.</div>
-        ) : (
-          <table className="dash-table">
-            <thead><tr><th>Client</th><th>Service</th><th>Status</th><th>Date</th></tr></thead>
-            <tbody>
-              {recentBookings.map((b) => (
-                <tr key={b.id}>
-                  <td><Link to={`/admin/bookings/${b.id}`}>{b.clients?.name || "—"}</Link></td>
-                  <td>{b.service}</td>
-                  <td><StatusBadge status={b.status} /></td>
-                  <td>{b.scheduled_at ? new Date(b.scheduled_at).toLocaleDateString() : "—"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      {error && (
+        <div className="dash-error">
+          {error}
+          <br />
+          <button className="dash-retry" onClick={loadDashboard}>Retry</button>
+        </div>
+      )}
 
-      <div className="dash-section">
-        <div className="dash-section-title">Recent Messages</div>
-        {recentMessages.length === 0 ? (
-          <div className="dash-empty">No messages yet. Contact form submissions will appear here.</div>
-        ) : (
-          <table className="dash-table">
-            <thead><tr><th>Name</th><th>Service</th><th>Status</th><th>Received</th></tr></thead>
-            <tbody>
-              {recentMessages.map((m) => (
-                <tr key={m.id} style={{ fontWeight: m.is_read ? 400 : 600 }}>
-                  <td><Link to="/admin/messages">{m.name}</Link></td>
-                  <td>{m.service || "—"}</td>
-                  <td><StatusBadge status={m.is_read ? "read" : "unread"} /></td>
-                  <td>{new Date(m.created_at).toLocaleDateString()}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
+      {!loading && !error && (
+        <>
+          <div className="dash-stats">
+            {statCards.map((s) => (
+              <Link to={s.link} key={s.label} className="dash-stat-card">
+                <div className="dash-stat-value" style={{ color: s.color }}>{s.value}</div>
+                <div className="dash-stat-label">{s.label}</div>
+              </Link>
+            ))}
+          </div>
+
+          <div className="dash-section">
+            <div className="dash-section-title">Recent Bookings</div>
+            {recentBookings.length === 0 ? (
+              <div className="dash-empty">No bookings yet. They'll show up here when clients book through your site.</div>
+            ) : (
+              <table className="dash-table">
+                <thead><tr><th>Client</th><th>Service</th><th>Status</th><th>Date</th></tr></thead>
+                <tbody>
+                  {recentBookings.map((b) => (
+                    <tr key={b.id}>
+                      <td><Link to={`/admin/bookings/${b.id}`}>{b.clients?.name || "—"}</Link></td>
+                      <td>{b.service}</td>
+                      <td><StatusBadge status={b.status} /></td>
+                      <td>{b.scheduled_at ? new Date(b.scheduled_at).toLocaleDateString() : "—"}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+
+          <div className="dash-section">
+            <div className="dash-section-title">Recent Messages</div>
+            {recentMessages.length === 0 ? (
+              <div className="dash-empty">No messages yet. Contact form submissions will appear here.</div>
+            ) : (
+              <table className="dash-table">
+                <thead><tr><th>Name</th><th>Service</th><th>Status</th><th>Received</th></tr></thead>
+                <tbody>
+                  {recentMessages.map((m) => (
+                    <tr key={m.id} style={{ fontWeight: m.is_read ? 400 : 600 }}>
+                      <td><Link to="/admin/messages">{m.name}</Link></td>
+                      <td>{m.service || "—"}</td>
+                      <td><StatusBadge status={m.is_read ? "read" : "unread"} /></td>
+                      <td>{new Date(m.created_at).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </>
+      )}
     </>
   );
 }

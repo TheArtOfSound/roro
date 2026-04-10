@@ -8,6 +8,8 @@ export default function Messages() {
   const [messages, setMessages] = useState([]);
   const [selected, setSelected] = useState(null);
   const [toast, setToast] = useState(null);
+  const [replyText, setReplyText] = useState("");
+  const [sendingReply, setSendingReply] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => { loadMessages(); }, []);
@@ -62,6 +64,30 @@ export default function Messages() {
     }
   }
 
+  async function handleSendReply() {
+    if (!replyText.trim() || !selected) return;
+    setSendingReply(true);
+    try {
+      const { error } = await supabase.from("messages").insert({
+        name: "RoRo Mode",
+        email: selected.email,
+        service: "admin_reply",
+        message: replyText.trim(),
+        is_read: true,
+        client_id: selected.client_id || null,
+      });
+      if (error) {
+        setToast({ message: error.message, type: "error" });
+        return;
+      }
+      setReplyText("");
+      setToast({ message: "Reply sent!", type: "success" });
+      loadMessages();
+    } finally {
+      setSendingReply(false);
+    }
+  }
+
   return (
     <>
       <style>{`
@@ -96,7 +122,7 @@ export default function Messages() {
           padding: 20px; background: #faf8f4; border: 1px solid #e8e0d4;
           margin-bottom: 24px; white-space: pre-wrap;
         }
-        .msg-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+        .msg-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
         .msg-action-btn {
           padding: 10px 20px; font-size: 12px; font-family: 'DM Sans', sans-serif;
           letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
@@ -106,6 +132,17 @@ export default function Messages() {
         .msg-action-btn:hover { border-color: #7a8c6e; color: #7a8c6e; }
         .msg-action-btn.primary { background: #1a1a1a; color: #f5f0e8; border-color: #1a1a1a; }
         .msg-action-btn.primary:hover { background: #7a8c6e; border-color: #7a8c6e; }
+        .msg-reply-section { border-top: 1px solid #e8e0d4; padding-top: 20px; }
+        .msg-reply-label {
+          font-size: 11px; font-weight: 500; letter-spacing: 2px;
+          text-transform: uppercase; color: #6b6560; margin-bottom: 8px;
+        }
+        .msg-reply-textarea {
+          width: 100%; min-height: 100px; padding: 12px 14px; border: 1px solid #e8e0d4;
+          font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+          background: white; resize: vertical; margin-bottom: 12px;
+        }
+        .msg-reply-textarea:focus { border-color: #7a8c6e; }
         @media (max-width: 768px) { .msg-layout { grid-template-columns: 1fr; } }
       `}</style>
 
@@ -127,7 +164,7 @@ export default function Messages() {
             <div
               key={m.id}
               className={`msg-item ${!m.is_read ? "unread" : ""} ${selected?.id === m.id ? "active" : ""}`}
-              onClick={() => { setSelected(m); if (!m.is_read) markRead(m); }}
+              onClick={() => { setSelected(m); setReplyText(""); if (!m.is_read) markRead(m); }}
             >
               <span className="msg-item-date">{new Date(m.created_at).toLocaleDateString()}</span>
               <div className="msg-item-name">{m.name}</div>
@@ -151,6 +188,24 @@ export default function Messages() {
               <button className="msg-action-btn primary" onClick={() => createBooking(selected)}>Create Booking</button>
               <button className="msg-action-btn" onClick={() => convertToClient(selected)}>Add to Clients</button>
               <a className="msg-action-btn" href={`mailto:${selected.email}`} style={{ textDecoration: "none" }}>Reply via Email</a>
+            </div>
+
+            <div className="msg-reply-section">
+              <div className="msg-reply-label">Reply</div>
+              <textarea
+                className="msg-reply-textarea"
+                placeholder="Type your reply..."
+                value={replyText}
+                onChange={(e) => setReplyText(e.target.value)}
+              />
+              <button
+                className="msg-action-btn primary"
+                onClick={handleSendReply}
+                disabled={sendingReply || !replyText.trim()}
+                style={{ opacity: (sendingReply || !replyText.trim()) ? 0.7 : 1 }}
+              >
+                {sendingReply ? "Sending..." : "Send Reply"}
+              </button>
             </div>
           </div>
         ) : (

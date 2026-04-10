@@ -94,7 +94,7 @@ export default function ClientLayout() {
       `}</style>
       <div className="cp-layout">
         <div className="cp-topbar">
-          <a href="#/client" className="cp-logo">Ro<span>Ro</span> Mode</a>
+          <a href="/client" className="cp-logo">Ro<span>Ro</span> Mode</a>
           <button className="cp-signout" onClick={handleSignOut}>Sign Out</button>
         </div>
         <nav className="cp-nav">
