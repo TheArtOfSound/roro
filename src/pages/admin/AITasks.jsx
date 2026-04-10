@@ -276,14 +276,124 @@ export default function AITasks() {
         <button className="at-btn" onClick={() => setShowCreate(true)}>+ New Task</button>
       </div>
 
-      <a
-        className="at-callout"
-        href="https://ionos.ai-voice-receptionist.com/customer/C_IO_O9Z8NGHE/sessions"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        View AI Call Logs
-      </a>
+      <div className="ai-section">
+        <div className="ai-section-header">
+          <div className="ai-section-title">AI Receptionist Activity</div>
+          <div className="ai-section-links">
+            <a
+              className="ai-section-link"
+              href="https://ionos.ai-voice-receptionist.com/customer/C_IO_O9Z8NGHE/sessions"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              View Call Logs
+            </a>
+            <button
+              className={showImport ? "at-btn-secondary" : "at-btn"}
+              onClick={() => setShowImport(!showImport)}
+              style={{ fontSize: "12px" }}
+            >
+              {showImport ? "Cancel" : "Quick Import Booking"}
+            </button>
+          </div>
+        </div>
+
+        {!showImport && (
+          <div style={{ fontSize: "14px", color: "#6b6560", lineHeight: 1.6 }}>
+            Import bookings from AI receptionist calls. Review the call logs, then use Quick Import to create a booking for any client who called in.
+          </div>
+        )}
+
+        {showImport && (
+          <form className="ai-import-form" onSubmit={handleImportBooking}>
+            <div className="at-form-row">
+              <div>
+                <label style={labelStyle}>Client Name</label>
+                <input
+                  style={fieldStyle}
+                  required
+                  placeholder="Full name"
+                  value={importForm.name}
+                  onChange={(e) => setImportForm({ ...importForm, name: e.target.value })}
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Email</label>
+                <input
+                  type="email"
+                  style={fieldStyle}
+                  placeholder="client@email.com"
+                  value={importForm.email}
+                  onChange={(e) => setImportForm({ ...importForm, email: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="at-form-row">
+              <div>
+                <label style={labelStyle}>Phone</label>
+                <input
+                  type="tel"
+                  style={fieldStyle}
+                  placeholder="+16025551234"
+                  value={importForm.phone}
+                  onChange={(e) => setImportForm({ ...importForm, phone: e.target.value })}
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Service</label>
+                <select
+                  style={fieldStyle}
+                  required
+                  value={importForm.service}
+                  onChange={(e) => setImportForm({ ...importForm, service: e.target.value })}
+                >
+                  <option value="">Select service...</option>
+                  {services.map((s) => (
+                    <option key={s.id} value={s.title}>{s.title}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div className="at-form-row">
+              <div>
+                <label style={labelStyle}>Preferred Date</label>
+                <input
+                  type="date"
+                  style={fieldStyle}
+                  value={importForm.preferred_date}
+                  onChange={(e) => setImportForm({ ...importForm, preferred_date: e.target.value })}
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Notes</label>
+                <input
+                  style={fieldStyle}
+                  placeholder="Additional notes..."
+                  value={importForm.notes}
+                  onChange={(e) => setImportForm({ ...importForm, notes: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="at-form-actions">
+              <button
+                type="submit"
+                disabled={importSaving}
+                className="at-btn"
+                style={{ opacity: importSaving ? 0.7 : 1 }}
+              >
+                {importSaving ? "Creating..." : "Create Booking"}
+              </button>
+              <button
+                type="button"
+                className="at-btn-secondary"
+                onClick={() => setShowImport(false)}
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
 
       {showCreate && (
         <form className="at-form" onSubmit={createTask}>
