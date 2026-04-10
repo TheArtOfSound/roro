@@ -321,7 +321,7 @@ export default function RoRoMode() {
           position: absolute;
           inset: 0;
           z-index: 0;
-          opacity: 0.015;
+          opacity: 0.06;
           background-image: url('/images/pattern.png');
           background-size: 250px;
           background-repeat: repeat;
