@@ -102,19 +102,8 @@ function useInView(ref) {
 }
 
 function FadeIn({ children, delay = 0, className = "" }) {
-  const ref = useRef(null);
-  const visible = useInView(ref);
   return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        minHeight: 1,
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(24px)",
-        transition: `opacity 0.7s cubic-bezier(.22,1,.36,1) ${delay}s, transform 0.7s cubic-bezier(.22,1,.36,1) ${delay}s`,
-      }}
-    >
+    <div className={className}>
       {children}
     </div>
   );
@@ -307,13 +296,13 @@ export default function RoRoMode() {
 
         /* HERO */
         .rr-hero {
-          min-height: 100vh;
+          min-height: 90vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           text-align: center;
-          padding: 120px 40px 80px;
+          padding: 80px 40px 40px;
           position: relative;
           overflow: hidden;
         }
@@ -1582,7 +1571,7 @@ export default function RoRoMode() {
       {/* SOCIAL PROOF */}
       <section style={{ padding: "40px 20px", background: "var(--warm-white)", textAlign: "center" }}>
         <FadeIn>
-          <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", justifyContent: "center", gap: 48, alignItems: "center", flexWrap: "wrap", opacity: 0.5 }}>
+          <div style={{ maxWidth: 800, margin: "0 auto", display: "flex", justifyContent: "center", gap: 48, alignItems: "center", flexWrap: "wrap" }}>
             <div style={{ fontFamily: "var(--font-body)", fontSize: 11, letterSpacing: 2, textTransform: "uppercase", color: "var(--text-light)" }}>Trusted by homeowners across Texas</div>
             <div style={{ display: "flex", gap: 32, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
               <span style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--text-light)", letterSpacing: 1 }}>50+ Spaces Transformed</span>
