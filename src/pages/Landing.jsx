@@ -24,6 +24,7 @@ const SERVICES = [
     desc: "A complete refresh of your living spaces — reimagined layouts, curated styling, and intentional design that transforms your home into something that feels entirely new... without buying brand new.",
     icon: "⟐",
     price: "Starting at $375",
+    image: "service-resets.png",
     keywords: ["Decluttering", "Space Planning", "Room Styling", "Fresh Start"],
   },
   {
@@ -31,6 +32,7 @@ const SERVICES = [
     desc: "From chaotic to composed — thoughtfully designed systems tailored to your life. Organized by season, color, and frequency so your mornings begin with ease and intention.",
     icon: "◧",
     price: "Starting at $250",
+    image: "service-closets.png",
     keywords: ["Wardrobe Edit", "Capsule Closet", "Color Coded", "Storage Solutions"],
   },
   {
@@ -38,6 +40,7 @@ const SERVICES = [
     desc: "Functional beauty at the heart of your kitchen — clear containers, intentional zones, and systems designed to be lived in and maintained with ease.",
     icon: "⊞",
     price: "Starting at $200",
+    image: "service-pantry.png",
     keywords: ["Container Systems", "Labeled Zones", "Basket Styling", "Functional Design"],
   },
   {
@@ -45,6 +48,7 @@ const SERVICES = [
     desc: "Treasure hunting at its finest — sourcing thrifted, vintage, and secondhand pieces that bring depth, character, and individuality no catalog can replicate.",
     icon: "◎",
     price: "Starting at $150",
+    image: "service-styling.png",
     keywords: ["Thrift Sourcing", "Vintage Finds", "Eco-Friendly", "One-of-a-Kind"],
   },
   {
@@ -52,6 +56,7 @@ const SERVICES = [
     desc: "Step into a personalized design experience from anywhere. We walk through your goals, challenges, and vision while evaluating your space in real time — expert guidance on organization, styling, and functional flow, tailored specifically to your lifestyle.",
     icon: "◉",
     price: "$125 / session",
+    image: "service-virtual.png",
     keywords: ["Remote Design", "Video Session", "Personalized Plan", "Anywhere"],
   },
 ];
@@ -1642,27 +1647,36 @@ export default function RoRoMode() {
                 </button>
               ))}
             </div>
-            <div className="rr-service-detail">
-              <h3>{SERVICES[activeService].title}</h3>
-              <p>{SERVICES[activeService].desc}</p>
-              {SERVICES[activeService].price && (
-                <div style={{ fontFamily: "var(--font-display)", fontSize: 22, color: "var(--sage)", fontWeight: 500, margin: "16px 0" }}>{SERVICES[activeService].price}</div>
+            <div className="rr-service-detail" style={{ display: "grid", gridTemplateColumns: "1fr auto", gap: 32, alignItems: "start" }}>
+              <div>
+                <h3>{SERVICES[activeService].title}</h3>
+                <p>{SERVICES[activeService].desc}</p>
+                {SERVICES[activeService].price && (
+                  <div style={{ fontFamily: "var(--font-display)", fontSize: 22, color: "var(--sage)", fontWeight: 500, margin: "16px 0" }}>{SERVICES[activeService].price}</div>
+                )}
+                {SERVICES[activeService].keywords && (
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
+                    {SERVICES[activeService].keywords.map((kw, i) => (
+                      <span key={i} style={{
+                        fontSize: "10px", fontWeight: 500, letterSpacing: "1.5px",
+                        textTransform: "uppercase", padding: "6px 14px",
+                        border: "1px solid var(--sand)", borderRadius: "100px",
+                        color: "var(--text-light)",
+                      }}>{kw}</span>
+                    ))}
+                  </div>
+                )}
+                <span role="button" tabIndex={0} className="rr-service-cta" onClick={() => scrollTo("contact")}>
+                  Book this service →
+                </span>
+              </div>
+              {SERVICES[activeService].image && (
+                <img
+                  src={`${import.meta.env.BASE_URL}images/${SERVICES[activeService].image}`}
+                  alt={SERVICES[activeService].title}
+                  style={{ width: 220, height: 220, objectFit: "contain", borderRadius: 4, flexShrink: 0 }}
+                />
               )}
-              {SERVICES[activeService].keywords && (
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginBottom: "20px" }}>
-                  {SERVICES[activeService].keywords.map((kw, i) => (
-                    <span key={i} style={{
-                      fontSize: "10px", fontWeight: 500, letterSpacing: "1.5px",
-                      textTransform: "uppercase", padding: "6px 14px",
-                      border: "1px solid var(--sand)", borderRadius: "100px",
-                      color: "var(--text-light)",
-                    }}>{kw}</span>
-                  ))}
-                </div>
-              )}
-              <span role="button" tabIndex={0} className="rr-service-cta" onClick={() => scrollTo("contact")}>
-                Book this service →
-              </span>
             </div>
           </div>
         </FadeIn>
