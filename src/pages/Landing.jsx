@@ -1956,7 +1956,7 @@ export default function RoRoMode() {
             </p>
             <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: 12, marginBottom: 8 }}>
               <a href="tel:+16624794007" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", background: "var(--sage)", color: "white", textDecoration: "none", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>
-                📞 Call (662) 479-4007
+                📞 Call or Text (662) 479-4007
               </a>
               <a href="mailto:itsroromode@gmail.com" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 24px", border: "1px solid rgba(245,240,232,0.3)", color: "var(--cream)", textDecoration: "none", fontFamily: "var(--font-body)", fontSize: 13, fontWeight: 500, letterSpacing: 1, textTransform: "uppercase" }}>
                 ✉ Email Us
@@ -2105,7 +2105,7 @@ export default function RoRoMode() {
         <div className="rr-footer-inner">
           <div className="rr-footer-brand">RoRo Mode</div>
           <ul className="rr-footer-links">
-            <li><a href="tel:+16624794007">Call: (662) 479-4007</a></li>
+            <li><a href="tel:+16624794007">Call or Text: (662) 479-4007</a></li>
             <li><a href="mailto:itsroromode@gmail.com">Email</a></li>
             <li><a href="https://www.instagram.com/_roro_mode_" target="_blank" rel="noopener noreferrer">Instagram</a></li>
             <li><span role="button" tabIndex={0} onClick={() => scrollTo("contact")}>Contact</span></li>
