@@ -132,7 +132,7 @@ export default function Settings() {
   }
 
   async function toggleServiceActive(svc) {
-    const { error } = await supabase.from("services").update({ active: !svc.active }).eq("id", svc.id);
+    const { error } = await supabase.from("services").update({ is_active: !svc.is_active }).eq("id", svc.id);
     if (error) {
       setToast({ message: error.message, type: "error" });
       return;
@@ -387,14 +387,14 @@ export default function Settings() {
                       <td style={{ fontWeight: 500 }}>{svc.title}</td>
                       <td>{svc.price_display || "—"}</td>
                       <td>
-                        <span className={`st-badge ${svc.active ? "st-badge-active" : "st-badge-inactive"}`}>
-                          {svc.active ? "Active" : "Inactive"}
+                        <span className={`st-badge ${svc.is_active ? "st-badge-active" : "st-badge-inactive"}`}>
+                          {svc.is_active ? "Active" : "Inactive"}
                         </span>
                       </td>
                       <td>
                         <div style={{ display: "flex", gap: 8 }}>
                           <button className="st-toggle" onClick={() => toggleServiceActive(svc)}>
-                            {svc.active ? "Deactivate" : "Activate"}
+                            {svc.is_active ? "Deactivate" : "Activate"}
                           </button>
                           <button className="st-toggle" onClick={() => startEdit(svc)}>Edit</button>
                           <button className="st-btn-danger" onClick={() => deleteService(svc.id)}>Delete</button>
