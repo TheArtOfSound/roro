@@ -147,18 +147,25 @@ export default function RoRoMode() {
   }, [lightbox.open, closeLightbox, nextPhoto, prevPhoto]);
 
   const [formError, setFormError] = useState("");
+  const [formSending, setFormSending] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setFormError("");
+    if (!formData.name.trim()) return setFormError("Please enter your name.");
+    if (!formData.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
+      return setFormError("Please enter a valid email address.");
+    if (!formData.message.trim()) return setFormError("Please tell us about your space.");
+    setFormSending(true);
     const { error } = await supabase.from("messages").insert({
-      name: formData.name,
-      email: formData.email,
+      name: formData.name.trim(),
+      email: formData.email.trim(),
       service: formData.service,
-      message: formData.message,
+      message: formData.message.trim(),
     });
+    setFormSending(false);
     if (error) {
-      setFormError("Something went wrong. Please try again or email us directly.");
+      setFormError("Something went wrong. Please try again or email us at itsroromode@gmail.com.");
     } else {
       setFormSent(true);
     }
@@ -1861,9 +1868,10 @@ export default function RoRoMode() {
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
+                {formError && <p style={{ color: "#c4735a", fontSize: 14, margin: "0 0 12px", fontFamily: "var(--font-body)" }}>{formError}</p>}
                 <div className="rr-form-submit">
-                  <button className="rr-btn-primary" onClick={handleSubmit}>
-                    Send Message →
+                  <button className="rr-btn-primary" onClick={handleSubmit} disabled={formSending} style={{ opacity: formSending ? 0.7 : 1 }}>
+                    {formSending ? "Sending..." : "Send Message →"}
                   </button>
                 </div>
               </>
