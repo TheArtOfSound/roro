@@ -40,7 +40,7 @@ const DEFAULT_SERVICES = [
     title: "Pantry Organization",
     desc: "Functional beauty at the heart of your kitchen — clear containers, intentional zones, and systems designed to be lived in and maintained with ease.",
     icon: "⊞",
-    price: "Starting at $200",
+    price: "Starting at $250",
     image: "service-pantry.png",
     keywords: ["Container Systems", "Labeled Zones", "Basket Styling", "Functional Design"],
   },
@@ -100,7 +100,7 @@ function scrollTo(id) {
 
 export default function RoRoMode() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeService, setActiveService] = useState(-1);
+  const [activeService, setActiveService] = useState(0);
   const [scrollY, setScrollY] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", service: "", message: "", spaces: [], budget: "", timeline: "" });
   const [formSent, setFormSent] = useState(false);
@@ -315,6 +315,20 @@ export default function RoRoMode() {
             radial-gradient(ellipse at 80% 30%, rgba(196,162,101,0.06) 0%, transparent 50%),
             radial-gradient(ellipse at 50% 90%, rgba(196,115,90,0.04) 0%, transparent 40%);
           z-index: 0;
+        }
+
+        .rr-hero-pattern {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          opacity: 0.04;
+          background-image:
+            radial-gradient(circle at 0% 50%, var(--charcoal) 50%, transparent 50%),
+            radial-gradient(circle at 100% 50%, var(--charcoal) 50%, transparent 50%),
+            radial-gradient(circle at 50% 0%, var(--charcoal) 50%, transparent 50%),
+            radial-gradient(circle at 50% 100%, var(--charcoal) 50%, transparent 50%);
+          background-size: 60px 60px;
+          background-position: 0 0, 30px 0, 0 0, 30px 30px;
         }
 
         .rr-hero-grain {
@@ -675,6 +689,12 @@ export default function RoRoMode() {
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           gap: 20px;
           margin-top: 32px;
+          align-items: stretch;
+        }
+
+        .rr-approach-grid > * {
+          display: flex;
+          flex-direction: column;
         }
 
         .rr-approach-card {
@@ -682,6 +702,9 @@ export default function RoRoMode() {
           background: var(--warm-white);
           border: 1px solid var(--sand);
           transition: all 0.4s;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
         }
 
         .rr-approach-card:hover {
@@ -711,6 +734,7 @@ export default function RoRoMode() {
           font-weight: 300;
           line-height: 1.7;
           color: var(--text-light);
+          flex: 1;
         }
 
         /* TESTIMONIALS */
@@ -796,6 +820,7 @@ export default function RoRoMode() {
         }
 
         .rr-smallbiz-emoji {
+          display: none;
           font-size: 32px;
           margin-bottom: 20px;
           display: block;
@@ -1531,9 +1556,9 @@ export default function RoRoMode() {
           .rr-philosophy { padding: 40px 20px; }
           .rr-philosophy-inner { grid-template-columns: 1fr; gap: 24px; }
 
-          /* Services - override inline grid */
+          /* Services */
           .rr-services { padding: 40px 16px; }
-          .rr-services-card-grid { grid-template-columns: 1fr !important; gap: 12px !important; }
+          .rr-services-grid { grid-template-columns: 1fr; }
 
           /* Approach */
           .rr-approach { padding: 40px 20px; }
@@ -1592,7 +1617,7 @@ export default function RoRoMode() {
       {/* NAV */}
       <nav className={`rr-nav ${scrollY > 60 ? "scrolled" : ""}`}>
         <div className="rr-logo-text">
-          Ro<span>Ro</span> Mode
+          <img src={`${import.meta.env.BASE_URL}images/roro-logo.png`} alt="RoRo Mode" style={{ height: 40 }} />
         </div>
         <ul className="rr-nav-links">
           <li><span role="button" tabIndex={0} onClick={() => scrollTo("services")}>Services</span></li>
@@ -1618,6 +1643,7 @@ export default function RoRoMode() {
       {/* HERO */}
       <section className="rr-hero">
         <div className="rr-hero-bg" />
+        <div className="rr-hero-pattern" />
         <div className="rr-hero-grain" />
         <div className="rr-hero-content">
           <FadeIn>
@@ -1702,57 +1728,49 @@ export default function RoRoMode() {
           <h2 className="rr-section-heading">What we transform</h2>
         </FadeIn>
         <FadeIn delay={0.1}>
-          <div className="rr-services-card-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, maxWidth: 1200, margin: "0 auto" }}>
-            {services.map((svc, i) => (
-              <div
-                key={i}
-                onClick={() => setActiveService(activeService === i ? -1 : i)}
-                style={{
-                  cursor: "pointer",
-                  border: "2px solid",
-                  borderColor: activeService === i ? "var(--sage)" : "#e8e0d4",
-                  background: activeService === i ? "var(--warm-white)" : "white",
-                  transition: "all 0.3s",
-                  overflow: "hidden",
-                }}
-              >
-                {/* Card image */}
-                <div style={{ position: "relative", background: "#f5f0e8" }}>
-                  <img
-                    src={`${import.meta.env.BASE_URL}images/${svc.image}`}
-                    alt={svc.title}
-                    style={{ width: "100%", height: 160, objectFit: "contain", display: "block" }}
-                  />
-                </div>
-                {/* Card content */}
-                <div style={{ padding: "20px 24px" }}>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 400, color: "var(--charcoal)", marginBottom: 4 }}>
-                    {svc.title}
+          <div className="rr-services-grid">
+            <div className="rr-services-tabs">
+              {services.map((svc, i) => (
+                <button
+                  key={i}
+                  className={`rr-service-tab ${activeService === i ? "active" : ""}`}
+                  onClick={() => setActiveService(i)}
+                >
+                  <span className="rr-tab-icon">{svc.icon}</span>
+                  {svc.title}
+                </button>
+              ))}
+            </div>
+            <div className="rr-service-detail">
+              {activeService >= 0 && activeService < services.length ? (
+                <>
+                  <h3>{services[activeService].title}</h3>
+                  <p>{services[activeService].desc}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 20 }}>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--sage)", fontWeight: 500 }}>
+                      {services[activeService].price}
+                    </span>
                   </div>
-                  <div style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--sage)", fontWeight: 500, marginBottom: 8 }}>
-                    {svc.price}
+                  <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 20 }}>
+                    {services[activeService].keywords.map((kw, j) => (
+                      <span key={j} style={{
+                        fontSize: 10, fontWeight: 500, letterSpacing: 1.5,
+                        textTransform: "uppercase", padding: "5px 12px",
+                        border: "1px solid var(--sand)", borderRadius: 100,
+                        color: "var(--text-light)",
+                      }}>{kw}</span>
+                    ))}
                   </div>
-                  {activeService === i && (
-                    <div style={{ marginTop: 12 }}>
-                      <p style={{ fontSize: 14, lineHeight: 1.7, color: "var(--text-light)", marginBottom: 16 }}>{svc.desc}</p>
-                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 16 }}>
-                        {svc.keywords.map((kw, j) => (
-                          <span key={j} style={{
-                            fontSize: 10, fontWeight: 500, letterSpacing: 1.5,
-                            textTransform: "uppercase", padding: "5px 12px",
-                            border: "1px solid var(--sand)", borderRadius: 100,
-                            color: "var(--text-light)",
-                          }}>{kw}</span>
-                        ))}
-                      </div>
-                      <span role="button" tabIndex={0} className="rr-service-cta" onClick={(e) => { e.stopPropagation(); scrollTo("contact"); }}>
-                        Book this service →
-                      </span>
-                    </div>
-                  )}
+                  <span role="button" tabIndex={0} className="rr-service-cta" onClick={() => scrollTo("contact")}>
+                    Book this service →
+                  </span>
+                </>
+              ) : (
+                <div style={{ color: "var(--text-light)", fontSize: 16, fontWeight: 300 }}>
+                  Select a service to learn more.
                 </div>
-              </div>
-            ))}
+              )}
+            </div>
           </div>
         </FadeIn>
       </section>
@@ -1832,7 +1850,6 @@ export default function RoRoMode() {
       <section className="rr-smallbiz">
         <FadeIn>
           <div className="rr-smallbiz-inner">
-            <span className="rr-smallbiz-emoji">🛍</span>
             <h2>When you buy from a small business, a real person does a little happy dance</h2>
             <p>
               RoRo MODE is proudly small, proudly local, and proudly woman-owned.
