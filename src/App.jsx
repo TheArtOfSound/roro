@@ -17,6 +17,8 @@ import InvoiceDetail from "./pages/admin/InvoiceDetail";
 import Messages from "./pages/admin/Messages";
 import Referrals from "./pages/admin/Referrals";
 import GiftCardsAdmin from "./pages/admin/GiftCards";
+import Settings from "./pages/admin/Settings";
+import AITasks from "./pages/admin/AITasks";
 import GiftCardPurchase from "./pages/GiftCardPurchase";
 import VirtualConsultation from "./pages/VirtualConsultation";
 import ClientDashboard from "./pages/client/ClientDashboard";
@@ -45,6 +47,8 @@ export default function App() {
           <Route path="messages" element={<Messages />} />
           <Route path="referrals" element={<Referrals />} />
           <Route path="gift-cards" element={<GiftCardsAdmin />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="ai-tasks" element={<AITasks />} />
         </Route>
       </Route>
       <Route path="/client" element={<ClientProtectedRoute />}>

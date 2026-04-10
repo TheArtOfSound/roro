@@ -18,7 +18,8 @@ const GALLERY = [
   { src: pantryEntry, label: "The Entryway Reveal", tag: "Pantry" },
 ];
 
-const SERVICES = [
+// Fallback services used if Supabase fetch fails
+const DEFAULT_SERVICES = [
   {
     title: "Home Resets",
     desc: "A complete refresh of your living spaces — reimagined layouts, curated styling, and intentional design that transforms your home into something that feels entirely new... without buying brand new.",
@@ -99,11 +100,28 @@ function scrollTo(id) {
 
 export default function RoRoMode() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeService, setActiveService] = useState(0);
+  const [activeService, setActiveService] = useState(-1);
   const [scrollY, setScrollY] = useState(0);
   const [formData, setFormData] = useState({ name: "", email: "", service: "", message: "", spaces: [], budget: "", timeline: "" });
   const [formSent, setFormSent] = useState(false);
   const [lightbox, setLightbox] = useState({ open: false, index: 0 });
+  const [services, setServices] = useState(DEFAULT_SERVICES);
+
+  // Fetch services from Supabase (falls back to hardcoded if fetch fails)
+  useEffect(() => {
+    supabase.from("services").select("*").eq("is_active", true).order("sort_order").then(({ data }) => {
+      if (data && data.length > 0) {
+        setServices(data.map(s => ({
+          title: s.title,
+          desc: s.description,
+          icon: s.icon,
+          price: s.price_display,
+          image: s.image,
+          keywords: s.keywords || [],
+        })));
+      }
+    });
+  }, []);
 
   const openLightbox = useCallback((i) => setLightbox({ open: true, index: i }), []);
   const closeLightbox = useCallback(() => setLightbox((s) => ({ ...s, open: false })), []);
@@ -1685,7 +1703,7 @@ export default function RoRoMode() {
         </FadeIn>
         <FadeIn delay={0.1}>
           <div className="rr-services-card-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, maxWidth: 1200, margin: "0 auto" }}>
-            {SERVICES.map((svc, i) => (
+            {services.map((svc, i) => (
               <div
                 key={i}
                 onClick={() => setActiveService(activeService === i ? -1 : i)}
@@ -1998,14 +2016,9 @@ export default function RoRoMode() {
                     onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                   >
                     <option value="">Select a service...</option>
-                    <option>Home Reset — Full Room Refresh</option>
-                    <option>Closet Transformation — Wardrobe Edit & Organization</option>
-                    <option>Pantry Organization — Containers, Labels & Zones</option>
-                    <option>Sustainable Styling — Thrifted & Vintage Sourcing</option>
-                    <option>Virtual Consultation — Remote Design Session</option>
-                    <option>Garage / Storage Organization</option>
-                    <option>Move-In / Move-Out Setup</option>
-                    <option>Holiday / Seasonal Refresh</option>
+                    {services.map((svc) => (
+                      <option key={svc.title}>{svc.title} — {svc.price}</option>
+                    ))}
                     <option>Not sure yet — help me decide</option>
                   </select>
                 </div>

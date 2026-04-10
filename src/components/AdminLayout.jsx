@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import Sidebar from "./Sidebar";
+import AdminAI from "./AdminAI";
 
 export default function AdminLayout() {
   const { user, signOut } = useAuth();
@@ -88,6 +89,7 @@ export default function AdminLayout() {
             <Outlet />
           </div>
         </div>
+        <AdminAI />
       </div>
     </>
   );

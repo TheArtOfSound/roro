@@ -8,6 +8,8 @@ const NAV_ITEMS = [
   { to: "/admin/messages", label: "Messages", icon: "◧" },
   { to: "/admin/referrals", label: "Referrals", icon: "⟐" },
   { to: "/admin/gift-cards", label: "Gift Cards", icon: "▣" },
+  { to: "/admin/ai-tasks", label: "Tasks", icon: "\u{1F4CB}" },
+  { to: "/admin/settings", label: "Settings", icon: "\u2699" },
 ];
 
 export default function Sidebar({ open, onClose }) {
