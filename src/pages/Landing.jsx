@@ -1536,6 +1536,8 @@ export default function RoRoMode() {
         }
 
         @media (max-width: 768px) {
+          /* Nav logo */
+          .rr-nav img { height: 60px !important; }
           /* Hero */
           .rr-hero { min-height: auto; padding: 60px 20px 40px; }
           .rr-hero h1 { font-size: 32px; }
