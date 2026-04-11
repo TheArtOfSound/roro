@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /virtual
+Allow: /gift-cards
+
+Disallow: /admin
+Disallow: /admin/*
+Disallow: /client
+Disallow: /client/*
+Disallow: /login
+Disallow: /client/login
+Disallow: /api/
+
+Sitemap: https://roromode.com/sitemap.xml
